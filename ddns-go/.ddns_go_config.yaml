@@ -1,0 +1,33 @@
+dnsconf:
+    - name: ""
+      ipv4:
+        enable: true
+        gettype: netInterface
+        url: https://myip.ipip.net, https://ddns.oray.com/checkip, https://ip.3322.net, https://4.ipw.cn, https://v4.yinghualuo.cn/bejson
+        netinterface: wlan0
+        cmd: ""
+        domains:
+            - h.baohuiming.net
+      ipv6:
+        enable: true
+        gettype: netInterface
+        url: https://speed.neu6.edu.cn/getIP.php, https://v6.ident.me, https://6.ipw.cn, https://v6.yinghualuo.cn/bejson
+        netinterface: wlan0
+        cmd: ""
+        ipv6reg: ""
+        domains:
+            - h-v6.baohuiming.net
+      dns:
+        name: huaweicloud
+        id: WYKLGPWM0E8KEEITGWMO
+        secret: y746HGQorwO2T3h2CxnG77IHZH4o91iSPlwt4LNj
+      ttl: ""
+user:
+    username: ming88208
+    password: $2a$10$BYTpqss6LE87k31wFXMaw.kD.fPQzJUcwerto5zaRaSF9MNcg0xUa
+webhook:
+    webhookurl: ""
+    webhookrequestbody: ""
+    webhookheaders: ""
+notallowwanaccess: false
+lang: zh

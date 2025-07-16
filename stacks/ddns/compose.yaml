@@ -1,0 +1,9 @@
+services:
+  ddns-go:
+    container_name: ddnsgo
+    image: ghcr.io/jeessy2/ddns-go:v6.11.3
+    restart: unless-stopped
+    volumes:
+      - /home/docker/ddns-go:/root
+    network_mode: host
+networks: {}

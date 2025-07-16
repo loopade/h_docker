@@ -1,0 +1,14 @@
+name: homeassistant
+services:
+  homeassistant:
+    container_name: homeassistant
+    image: m.daocloud.io/ghcr.io/home-assistant/home-assistant:2025.7
+    volumes:
+      - /home/docker/homeassistant:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+      - /home/dbbackup:/dbbackup
+    restart: always
+    privileged: true
+    network_mode: host
+networks: {}

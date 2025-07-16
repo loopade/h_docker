@@ -1,0 +1,68 @@
+- id: '1732371688674'
+  alias: 加湿器提醒
+  description: ''
+  triggers:
+  - trigger: time
+    at: '19:30:00'
+  - trigger: time
+    at: '20:30:00'
+  - trigger: time
+    at: '21:30:00'
+  - trigger: time
+    at: '22:30:00'
+  conditions:
+  - condition: numeric_state
+    entity_id: sensor.beep_humidity
+    below: 40
+  actions:
+  - action: tts.edge_tts_say
+    data:
+      cache: false
+      entity_id: media_player.dlna_feixun_r1
+      message: 主人，当前湿度低于40%，请打开加湿器。
+  mode: single
+- id: '1744550092179'
+  alias: 定时关LED屏显
+  description: ''
+  triggers:
+  - trigger: time
+    at: '23:00:00'
+  conditions: []
+  actions:
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.beep_display_switch
+  mode: single
+- id: '1744550142510'
+  alias: 定时开LED屏显
+  description: ''
+  triggers:
+  - trigger: time
+    at: 08:00:00
+  conditions: []
+  actions:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.beep_display_switch
+  mode: single
+- id: '1744815597746'
+  alias: 铲猫粑粑提醒
+  description: ''
+  triggers:
+  - trigger: time
+    at: '20:30:00'
+  - trigger: time
+    at: '22:30:00'
+  conditions: []
+  actions:
+  - action: tts.edge_tts_say
+    metadata: {}
+    data:
+      cache: false
+      entity_id: media_player.dlna_feixun_r1
+      message: 主人，该铲猫粑粑了
+  mode: single

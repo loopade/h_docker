@@ -1,0 +1,10 @@
+*.db
+*.db*
+backups
+*.log
+*.1
+*.pyc
+snapshot
+__pycache__
+*.png
+*.log.*
