@@ -8,3 +8,4 @@ snapshot
 __pycache__
 *.png
 *.log.*
+tts

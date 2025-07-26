@@ -18,7 +18,7 @@
   - action: tts.edge_tts_say
     data:
       cache: false
-      entity_id: media_player.dlna_feixun_r1
+      entity_id: media_player.bubbleupnp_rk322x_box
       message: 主人，当前湿度低于40%，请打开加湿器。
   mode: single
 - id: '1744550092179'
@@ -63,6 +63,6 @@
     metadata: {}
     data:
       cache: false
-      entity_id: media_player.dlna_feixun_r1
+      entity_id: media_player.bubbleupnp_rk322x_box
       message: 主人，该铲猫粑粑了
   mode: single

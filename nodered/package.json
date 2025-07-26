@@ -1,0 +1,11 @@
+{
+    "name": "node-red-project",
+    "description": "A Node-RED Project",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "jose": "^6.0.12",
+        "node-red-contrib-gzip": "~0.0.3",
+        "node-red-contrib-home-assistant-websocket": "~0.77.2"
+    }
+}

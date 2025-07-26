@@ -1,0 +1,9 @@
+{
+    "jose": {
+        "spec": "jose",
+        "module": "jose",
+        "subpath": "",
+        "builtin": false,
+        "known": false
+    }
+}

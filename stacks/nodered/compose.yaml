@@ -1,0 +1,17 @@
+name: nodered
+services:
+  node-red:
+    container_name: nodered
+    image: m.daocloud.io/docker.io/nodered/node-red:4.0.9
+    volumes:
+      - /home/docker/nodered:/data
+    restart: always
+    user: root
+    ports:
+      - 1880:1880
+    environment:
+      - TZ=Asia/Shanghai
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+networks: {}
+
