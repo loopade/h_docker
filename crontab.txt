@@ -5,4 +5,4 @@
 0 3 * * * reboot
 10 3 * * * cp /var/spool/cron/root /home/docker/crontab.txt
 0 2 * * * cd /home/docker && bash auto_backup.sh
-@reboot cd /home/clash-for-linux-install && bash /home/clash-for-linux-install/install.sh
+@reboot cd /home/clash-for-linux-install && bash /home/clash-for-linux-install/install.sh && clash on
