@@ -1,0 +1,21 @@
+name: esphome
+services:
+  esphome:
+    container_name: esphome
+    image: m.daocloud.io/ghcr.io/esphome/esphome:2025.7
+    volumes:
+      - /home/docker/esphome:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: always
+    privileged: true
+    ports:
+      - 6052:6052
+    environment:
+      - USERNAME=ming
+      - PASSWORD=baohuiming
+      - HTTP_PROXY=http://host.docker.internal:7890
+      - HTTPS_PROXY=http://host.docker.internal:7890
+      - NO_PROXY=localhost,127.0.0.1
+    extra_hosts:
+      - host.docker.internal:host-gateway
+networks: {}

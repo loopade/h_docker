@@ -1,0 +1,437 @@
+esphome:
+  name: $devicename
+  friendly_name: $devicename
+  on_boot:
+    then:
+      # - rtttl.play: $mario
+
+api:
+  encryption:
+    key: !secret uni_key
+  reboot_timeout: 0s
+
+web_server:
+  port: 80
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+ota:
+  - platform: esphome
+    password: "dd0b8f81a2eeb6e890555dfa509f7ffc"
+
+wifi:
+  ssid: !secret uni_ssid
+  password: !secret uni_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Beep ESP32 Fallback Hotspot"
+    password: "baohuiming"
+    
+# 常量
+substitutions:
+  $devicename: beep
+  $mario: "mario:d=4,o=5,b=100:16e6,16e6,32p,8e6,16c6,8e6,8g6,8p,8g"
+  $missiontImp: "MissionImp:d=16,o=6,b=95:32d,32d#,32d,32d#,32d,32d#,32d,32d#,32d,32d,32d#,32e,32f,32f#,32g,g"
+  $gadget : "Gadget:d=16,o=5,b=50:32d#,32f,32f#,32g#,a#,f#,a,f,g#,f#"
+  $di: "di:d=16,o=5,b=70:32d#"
+
+# 变量 
+globals:
+  - id: servo_angle_turn_on # 开灯角度
+    type: int
+    restore_value: yes
+    initial_value: '150'
+  - id: servo_angle_turn_off # 关灯角度
+    type: int
+    restore_value: yes
+    initial_value: '40'
+  - id: action_state # 记录上次是关灯还是开灯，关灯0，开灯1
+    type: int
+    restore_value: no
+    initial_value: '0'
+  - id: ir_state
+    type: int
+    restore_value: no
+    initial_value: '0'
+
+output:
+  # 蜂鸣器
+  - platform: ledc
+    pin: 21
+    id: rtttl_out
+    channel: 0 # 0~7 高速通道 80MHz，所有指令的默认通道
+  # 舵机
+  - platform: ledc
+    id: sg90_output
+    pin: 23
+    frequency: 50 Hz
+    channel: 8 # 8~15 低速通道 1MHz，独占通道，比较稳定
+
+# 蜂鸣器
+rtttl:
+  output: rtttl_out
+
+# 舵机
+servo:
+  - id: sg90_servo
+    output: sg90_output
+    min_level: 2.5%
+    max_level: 12.5%
+    idle_level: 7.5%
+    auto_detach_time: 0.1s # 0 -> disable auto-detach by default
+
+# 温湿度传感器
+sensor:
+  - platform: dht
+    pin: 22
+    temperature:
+      id: temperature
+      name: "Temperature"
+      # state_topic: $devicename/temperature
+    humidity:
+      id: humidity
+      name: "Humidity"
+      # state_topic: $devicename/humidity
+    update_interval: 60s    
+    model: DHT11
+
+# mqtt:
+#   id: mqtt_client
+#   broker: !secret cloud_ip
+#   port: 1883
+#   username: 'ming'
+#   password: !secret mqtt_password
+#   client_id: $devicename
+  # on_connect:
+    # - rtttl.play: $missiontImp
+  # on_disconnect:
+    # - rtttl.play: $gadget
+
+switch:
+  - platform: template
+    name: "Display Switch"
+    lambda: |-
+      if (id(matrix_status).state == "on") {
+        return true;
+      } else {
+        return false;
+      }
+    turn_on_action:
+      then:
+        - script.execute: 
+            id: switch_light
+            state: 'on'
+        # - mqtt.publish:
+        #     topic: $devicename/matrix/status
+        #     payload: 'on'
+        #     retain: true
+    turn_off_action:
+      then:
+        - script.execute: 
+            id: switch_light
+            state: 'off'
+        # - mqtt.publish:
+        #     topic: $devicename/matrix/status
+        #     payload: 'off'
+        #     retain: true
+
+text_sensor:
+  # 显示屏
+  - platform: template
+    name: "Display Text"
+    id: matrix_text
+    # topic: $devicename/matrix
+  - platform: template
+    name: "Display Status"
+    id: matrix_status
+    # topic: $devicename/matrix/status
+  # 舵机动作
+  - platform: template
+    name: "SG90 Action"
+    id: sg90_action
+    # topic: $devicename/sg90/action
+    on_value:
+      then:
+        - lambda: id(switch_light)->execute(x);
+  # 舵机角度：开灯
+  - platform: template
+    name: "SG90 Angle On"
+    id: sg90_angle_on
+    # topic: $devicename/sg90/angle/on
+    on_value:
+      then:
+        - lambda: |-
+            id(servo_angle_turn_on) = atoi(x.c_str());
+  # 舵机角度：关灯
+  - platform: template
+    name: "SG90 Angle Off"
+    id: sg90_angle_off
+    # topic: $devicename/sg90/angle/off
+    on_value:
+      then:
+        - lambda: |-
+            id(servo_angle_turn_off) = atoi(x.c_str());
+  # 红外遥控 
+  - platform: template
+    name: "IR Remote"
+    id: ir_remote
+    # topic: $devicename/ir/send
+    on_value:
+      then:
+        - lambda: |-
+            ESP_LOGD("IR Remote", "Recv: %s", x.c_str());
+        - remote_transmitter.transmit_raw:
+            code: !lambda |-
+              std::vector<int> result;
+              bool inNumber = false;
+              int currentNumber = 0;
+              int sign = 1; // 用于跟踪符号，默认为正数
+
+              for (char c : x) {
+                  if (isdigit(c)) {
+                      // 如果当前字符是数字，添加到当前数字中
+                      currentNumber = currentNumber * 10 + (c - '0');
+                      inNumber = true;
+                  } else if (c == '-') {
+                      // 如果遇到负号，设置标志
+                      if (!inNumber) { // 只有在非数字状态遇到负号时才改变符号
+                          sign = -1;
+                      }
+                  } else {
+                      if (inNumber) {
+                          // 如果之前正在读取数字，现在遇到非数字，将数字加入结果向量
+                          result.push_back(currentNumber * sign);
+                          currentNumber = 0;
+                          sign = 1; // 重置符号
+                          inNumber = false;
+                      }
+                      if (c == ',') continue; // 忽略逗号
+                      if (c != '[' && c != ']') {
+                          // 遇到非法字符，抛出异常或处理错误
+                          // throw std::runtime_error("Invalid character found");
+                          return result;
+                      }
+                  }
+              }
+
+              if (inNumber) {
+                  // 处理最后一个数字
+                  result.push_back(currentNumber * sign);
+              }
+
+              int len = result.size();
+              std::string data = "[";
+              for(int i = 0; i < len; ++i) {
+                data += to_string(result[i]);
+                if(i < len-1) data += ",";
+              }
+              data += "]";
+              ESP_LOGI("IR Remote", "Sending pulses: %s", data.c_str());
+
+              return result;
+            carrier_frequency: 38kHz
+            
+
+script:
+  - id: switch_light
+    mode: single
+    parameters:
+      state: string
+    then:
+      - lambda: |-
+          ESP_LOGD("script switch_light", "State: %s", state.c_str());
+          float level = 0.;
+          if (strcmp(state.c_str(), "on") == 0){
+            level = id(servo_angle_turn_on) / 90. - 1.;
+            id(action_state) = 1;
+          }
+          else if (strcmp(state.c_str(), "off") == 0){
+            level = id(servo_angle_turn_off) / 90. - 1.;
+            id(action_state) = 0;
+          } else {
+            ESP_LOGD("sg90", "Invalid action");
+            return;
+          }
+          id(sg90_servo).write(level);
+      - delay: 1.5s
+      - lambda: |-
+          id(sg90_servo).write(0);
+  - id: pulse_led
+    mode: single
+    then:
+      - light.turn_on:
+          id: status_light
+      - delay: 20ms
+      - light.turn_off:
+          id: status_light
+  - id: rc_toggle
+    mode: single
+    then:
+      - remote_transmitter.transmit_raw:
+          code: [9094,-4509,595,-543,594,-544,594,-544,594,-543,595,-544,594,-542,596,-526,611,-1683,569,-1680,568,-1681,568,-1680,569,-1681,569,-1680,569,-1680,569,-1681,569,-541,595,-1682,569,-540,596,-522,601,-557,595,-500,639,-542,597,-543,596,-542,595,-542,595,-1682,569,-1680,569,-1679,570,-1679,568,-1680,569,-1680,568,-1680,569]
+          carrier_frequency: 38kHz
+      #- lambda: |-
+      #    float level = 0.;
+      #    if (!id(action_state)) {
+      #      level = id(servo_angle_turn_on) / 90. - 1.;
+      #      id(action_state) = 1;
+      #      id(matrix_status).publish_state("on");
+      #    } else {
+      #      level = id(servo_angle_turn_off) / 90. - 1.;
+      #      id(action_state) = 0;
+      #      id(matrix_status).publish_state("off");
+      #    }
+      #    id(sg90_servo).write(level);
+      #- delay: 1.5s
+      #- lambda: |-
+      #    id(sg90_servo).write(0);
+      
+
+# 显示屏
+spi:
+  clk_pin: 27
+  mosi_pin: 12
+
+font:
+  - file: "pixelmix.ttf"
+    glyphs: "!\"%()+=,-_.:<>^~°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz"
+    id: digit_font
+    size: 8
+
+# LED显示屏
+display:
+  - platform: max7219digit
+    id: matrix
+    cs_pin: 14
+    num_chips: 4
+    intensity: 1
+    reverse_enable: true
+    rotate_chip: 180
+    lambda: |-
+      // ESP_LOGD("display", "Matrix Status: %s", id(matrix_status).state.c_str());
+      if(strcmp(id(matrix_status).state.c_str(), "on") == 0){
+        it.print(0, 0, id(digit_font), id(matrix_text).state.c_str());
+      }
+
+# 时间
+time:
+  - platform: sntp
+    id: current_time
+    timezone: Asia/Shanghai
+    servers: 
+      - ntp.ntsc.ac.cn
+      - 1.pool.ntp.org
+      - cn.pool.ntp.org
+    on_time:
+      - seconds: 0,30
+        minutes: '*'
+        then:
+          - lambda: |-
+              auto time = id(current_time).now();
+              ESP_LOGD("timer", "Now: %d:%d", time.hour, time.minute);
+              std::string h = to_string(time.hour);
+              std::string m = to_string(time.minute);
+
+              h = std::string(2 - h.length(), '0') + h;
+              m = std::string(2 - m.length(), '0') + m;
+
+              id(matrix_text).publish_state(" " + h + ":" + m);
+      - seconds: 15,45
+        minutes: '*'
+        then:
+          - lambda: |-
+              ESP_LOGD("timer", "Now: %.1f°C,%.0f%%", id(temperature).state, id(humidity).state);
+              std::string t = to_string(id(temperature).state);
+              std::string h = to_string(id(humidity).state);
+              t = t.substr(0, t.find(".") + 2);
+              h = h.substr(0, h.find("."));
+              id(matrix_text).publish_state(" " + t + "°C " + h + "%");
+      - seconds: 0
+        minutes: 0
+        then:
+            - if:
+                condition:
+                  text_sensor.state:
+                    id: matrix_status
+                    state: 'on'
+                then:
+                  - rtttl.play: $di
+
+# 板载LED
+light:
+  - platform: status_led
+    id: status_light
+    pin: 
+      number: GPIO2
+      # inverted: True
+
+
+remote_transmitter:
+  pin: 5
+  carrier_duty_percent: 50%
+  # rmt_channel: 2
+
+# 射频
+remote_receiver:
+  pin: 26 
+#    number: 26
+    # inverted: True
+    # mode: INPUT_PULLUP
+  dump: 
+    # - rc_switch
+    #- aeha
+    #- canalsat
+    #- canalsatld
+    #- coolix
+    #- dish
+    #- drayton
+    #- jvc
+    #- lg
+    #- magiquest
+    #- midea
+    #- nec
+    #- nexa
+    #- panasonic
+    #- pioneer
+    # - pronto
+    #- rc5
+    #- rc6
+    #- samsung
+    #- samsung36
+    #- sony
+    #- toshiba_ac
+    #- raw
+  tolerance: 30%
+  filter: 50us
+  idle: 5ms
+  buffer_size: 10kb
+  on_rc_switch:
+    then:
+      - lambda: |-
+          ESP_LOGD("remote", "Recv code: %s, protocol: %s", String(x.code), String(x.protocol));
+          // id(pulse_led)->execute();
+          // 0001 01000 00101 00100 10001 <-> 1315985 <-> 1 01000 00101 00100 10001
+          // 已知代码
+          uint64_t target = 1315985;
+          std::bitset<24> target_bits = std::bitset<24>(target); // 1 01000 00101 00100 10001
+          std::bitset<24> code_bits = std::bitset<24>(x.code);   // 0 00000 00001 01000 00101
+
+          while(!code_bits.test(20)) {// 开头是否为0001
+              code_bits <<= 1; // 左移
+          }
+          ESP_LOGD("remote", "Recv a toggle, target: %s, code: %s", target_bits.to_string().c_str() , code_bits.to_string().c_str());
+          
+          unsigned long mask = (1UL << 10) - 1;
+    
+          // 比较前10位是否相同
+          if ((target_bits.to_ulong() & mask) == (code_bits.to_ulong() & mask)){
+            ESP_LOGD("remote", "Recv a toggle, code[:10] == target[:10]");
+            id(rc_toggle)->execute();
+          }

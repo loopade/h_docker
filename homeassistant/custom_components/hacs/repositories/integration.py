@@ -128,6 +128,9 @@ class HacsIntegrationRepository(HacsRepository):
         if self.repository_manifest.content_in_root:
             self.content.path.remote = ""
 
+        if self.content.path.remote in ["custom_components/None", "custom_components/"]:
+            self.content.path.remote = "custom_components"
+
         if self.content.path.remote == "custom_components":
             name = get_first_directory_in_directory(self.tree, "custom_components")
             self.content.path.remote = f"custom_components/{name}"
@@ -164,6 +167,12 @@ class HacsIntegrationRepository(HacsRepository):
                     "repository_id": self.data.id,
                 },
             )
+
+        # remove original hacs
+        if self.data.full_name in ['hacs/integration']:
+            repo_hacs = self.hacs.repositories.get_by_full_name(self.data.full_name)
+            if isinstance(repo_hacs, HacsRepository):
+                repo_hacs.remove()
 
     async def reload_custom_components(self):
         """Reload custom_components (and config flows)in HA."""

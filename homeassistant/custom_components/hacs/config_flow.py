@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import aiohttp
 import asyncio
 from contextlib import suppress
 from typing import TYPE_CHECKING
@@ -23,12 +24,13 @@ from homeassistant.loader import async_get_integration
 import voluptuous as vol
 
 from .base import HacsBase
-from .const import CLIENT_ID, DOMAIN, LOCALE, MINIMUM_HA_VERSION
+from .const import CLIENT_ID, DOMAIN, LOCALE, MINIMUM_HA_VERSION, BASE_API_URL
 from .utils.configuration_schema import (
     APPDAEMON,
     COUNTRY,
     SIDEPANEL_ICON,
     SIDEPANEL_TITLE,
+    GITHUB_APIS,
 )
 from .utils.logger import LOGGER
 
@@ -67,9 +69,13 @@ class HacsFlowHandler(ConfigFlow, domain=DOMAIN):
                 self._errors["base"] = "acc"
                 return await self._show_config_form(user_input)
 
-            self._user_input = user_input
-
-            return await self.async_step_device(user_input)
+            if not user_input.get('use_shared'):
+                self._user_input = user_input
+                return await self.async_step_device(user_input)
+            elif not await self.async_get_shard_token():
+                self._errors['base'] = 'get_shared'
+            else:
+                return await self.async_step_device_done(user_input)
 
         # Initial form
         return await self._show_config_form(user_input)
@@ -136,6 +142,7 @@ class HacsFlowHandler(ConfigFlow, domain=DOMAIN):
             step_id="user",
             data_schema=vol.Schema(
                 {
+                    vol.Optional("use_shared", default=user_input.get("use_shared", True)): bool,
                     vol.Required("acc_logs", default=user_input.get("acc_logs", False)): bool,
                     vol.Required("acc_addons", default=user_input.get("acc_addons", False)): bool,
                     vol.Required(
@@ -164,6 +171,7 @@ class HacsFlowHandler(ConfigFlow, domain=DOMAIN):
             },
             options={
                 "experimental": True,
+                "use_shared": user_input.get('use_shared', False),
             },
         )
 
@@ -190,6 +198,27 @@ class HacsFlowHandler(ConfigFlow, domain=DOMAIN):
     def async_get_options_flow(config_entry):
         return HacsOptionsFlowHandler(config_entry)
 
+    async def async_get_shard_token(self):
+        api = 'https://tokenhub.hacs.vip/api/token/get'
+        try:
+            integration = await async_get_integration(self.hass, DOMAIN)
+            http = aiohttp_client.async_get_clientsession(self.hass)
+            res = await http.get(
+                api,
+                timeout=aiohttp.ClientTimeout(total=10),
+                headers={
+                    'User-Agent': f'HACS China/{integration.version}',
+                },
+            )
+            dat = await res.json()
+            token = dat.get('data', {}).get('token')
+        except Exception:
+            return None
+        self._activation = GitHubLoginOauthModel({
+            'access_token': token,
+        })
+        return token
+
 
 class HacsOptionsFlowHandler(OptionsFlow):
     """HACS config flow options handler."""
@@ -207,7 +236,17 @@ class HacsOptionsFlowHandler(OptionsFlow):
         """Handle a flow initialized by the user."""
         hacs: HacsBase = self.hass.data.get(DOMAIN)
         if user_input is not None:
-            return self.async_create_entry(title="", data={**user_input, "experimental": True})
+            if api := user_input.get('github_api_custom'):
+                user_input['github_api_base'] = api
+            if user_input.get('share_token'):
+                resp = await self.async_share_token(self.config_entry.data.get('token')) or {}
+                if resp.get('data', {}).get('use_count'):
+                    return self.async_abort(reason="token_exists")
+            return self.async_create_entry(title="", data={
+                "use_shared": self.config_entry.options.get('use_shared', False),
+                **user_input,
+                "experimental": True,
+            })
 
         if hacs is None or hacs.configuration is None:
             return self.async_abort(reason="not_setup")
@@ -215,11 +254,42 @@ class HacsOptionsFlowHandler(OptionsFlow):
         if hacs.queue.has_pending_tasks:
             return self.async_abort(reason="pending_tasks")
 
+        api_base = hacs.configuration.github_api_base or BASE_API_URL
+        GITHUB_APIS.setdefault(api_base, f'{api_base} (自定义)')
         schema = {
             vol.Optional(SIDEPANEL_TITLE, default=hacs.configuration.sidepanel_title): str,
             vol.Optional(SIDEPANEL_ICON, default=hacs.configuration.sidepanel_icon): str,
             vol.Optional(COUNTRY, default=hacs.configuration.country): vol.In(LOCALE),
+            vol.Optional("github_api_base", default=api_base): vol.In(GITHUB_APIS),
+            vol.Optional("github_api_custom", default=''): str,
             vol.Optional(APPDAEMON, default=hacs.configuration.appdaemon): bool,
         }
 
+        if not self.config_entry.options.get('use_shared'):
+            schema.update({
+                vol.Optional('share_token', default=self.config_entry.options.get('share_token', False)): bool,
+            })
+
         return self.async_show_form(step_id="user", data_schema=vol.Schema(schema))
+
+    async def async_share_token(self, token):
+        api = 'https://tokenhub.hacs.vip/api/token/share'
+        try:
+            integration = await async_get_integration(self.hass, DOMAIN)
+            http = aiohttp_client.async_get_clientsession(self.hass)
+            res = await http.get(
+                api,
+                timeout=aiohttp.ClientTimeout(total=10),
+                headers={
+                    'User-Agent': f'HACS China/{integration.version}',
+                },
+                json={
+                    'type': 'github',
+                    'token': token,
+                },
+            )
+            resp = await res.json() or {}
+            LOGGER.warning('Thanks for sharing your token: %s', resp)
+        except Exception:
+            resp = None
+        return resp

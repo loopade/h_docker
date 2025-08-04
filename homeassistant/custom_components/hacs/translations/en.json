@@ -9,11 +9,13 @@
         },
         "error": {
             "auth": "Personal Access Token is not correct",
-            "acc": "You need to acknowledge all the statements before continuing"
+            "acc": "You need to acknowledge all the statements before continuing",
+            "get_shared": "Get shared token failed, please try again"
         },
         "step": {
             "user": {
                 "data": {
+                    "use_shared": "Use shared github token",
                     "acc_logs": "I know how to access Home Assistant logs",
                     "acc_addons": "I know that there are no add-ons in HACS",
                     "acc_untested": "I know that everything inside HACS including HACS itself is custom and untested by Home Assistant",
@@ -37,7 +39,8 @@
         "abort": {
             "not_setup": "HACS is not setup.",
             "pending_tasks": "There are pending tasks. Try again later.",
-            "release_limit_value": "The release limit needs to be between 1 and 100."
+            "release_limit_value": "The release limit needs to be between 1 and 100.",
+            "token_exists": "The Github token has already been shared."
         },
         "step": {
             "user": {
@@ -48,7 +51,10 @@
                     "debug": "Enable debug",
                     "appdaemon": "Enable AppDaemon apps discovery & tracking",
                     "sidepanel_icon": "Side panel icon",
-                    "sidepanel_title": "Side panel title"
+                    "sidepanel_title": "Side panel title",
+                    "github_api_base": "Github API Server",
+                    "github_api_custom": "Custom Github API (eg. https://api.github.com)",
+                    "share_token": "Share Github token"
                 }
             }
         }

@@ -1,0 +1,471 @@
+[
+    {
+        "id": "d6ac0adf6a8f5b74",
+        "type": "tab",
+        "label": "天气预报",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "399a2a4a03353dc7",
+        "type": "server",
+        "name": "Home Assistant",
+        "version": 5,
+        "addon": false,
+        "rejectUnauthorizedCerts": true,
+        "ha_boolean": "y|yes|true|on|home|open",
+        "connectionDelay": true,
+        "cacheJson": true,
+        "heartbeat": false,
+        "heartbeatInterval": 30,
+        "areaSelector": "friendlyName",
+        "deviceSelector": "friendlyName",
+        "entitySelector": "friendlyName",
+        "statusSeparator": ": ",
+        "statusYear": "hidden",
+        "statusMonth": "short",
+        "statusDay": "numeric",
+        "statusHourCycle": "default",
+        "statusTimeFormat": "h:m",
+        "enableGlobalContextStore": false
+    },
+    {
+        "id": "049b38e2e11e6ede",
+        "type": "ha-entity-config",
+        "server": "399a2a4a03353dc7",
+        "deviceConfig": "",
+        "name": "",
+        "version": 6,
+        "entityType": "button",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "7c33bf4adf913f26",
+        "type": "ha-entity-config",
+        "server": "399a2a4a03353dc7",
+        "deviceConfig": "",
+        "name": "",
+        "version": 6,
+        "entityType": "number",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            },
+            {
+                "property": "unit_of_measurement",
+                "value": ""
+            },
+            {
+                "property": "min_value",
+                "value": ""
+            },
+            {
+                "property": "max_value",
+                "value": ""
+            },
+            {
+                "property": "step_value",
+                "value": ""
+            },
+            {
+                "property": "mode",
+                "value": "auto"
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "213541b9c4c4a477",
+        "type": "ha-device-config",
+        "name": "test123",
+        "hwVersion": "",
+        "manufacturer": "Node-RED",
+        "model": "",
+        "swVersion": ""
+    },
+    {
+        "id": "da62b93efda2e529",
+        "type": "ha-entity-config",
+        "server": "399a2a4a03353dc7",
+        "deviceConfig": "213541b9c4c4a477",
+        "name": "",
+        "version": 6,
+        "entityType": "button",
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            },
+            {
+                "property": "entity_picture",
+                "value": ""
+            },
+            {
+                "property": "entity_category",
+                "value": ""
+            },
+            {
+                "property": "device_class",
+                "value": ""
+            }
+        ],
+        "resend": false,
+        "debugEnabled": false
+    },
+    {
+        "id": "b693c0a7869b75e7",
+        "type": "http request",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "获取天气",
+        "method": "GET",
+        "ret": "bin",
+        "paytoqs": "ignore",
+        "url": "https://px3yfqmwdt.re.qweatherapi.com/v7/weather/24h?location=101010100&lang=en",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Authorization",
+                "valueType": "msg",
+                "valueValue": "payload"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "other",
+                "valueValue": "text/plain; charset=utf-8"
+            }
+        ],
+        "x": 480,
+        "y": 1020,
+        "wires": [
+            [
+                "07cbb570d8f9166c"
+            ]
+        ]
+    },
+    {
+        "id": "b67399c81ee704cc",
+        "type": "inject",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "工作日早上",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "40 07 * * 1,2,3,4,5",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 960,
+        "wires": [
+            [
+                "b0d36d53709c3e48"
+            ]
+        ]
+    },
+    {
+        "id": "b0d36d53709c3e48",
+        "type": "function",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "jwt设置",
+        "func": "\nconst { SignJWT, importPKCS8 } = jose\n\nconst YourPrivateKey = `-----BEGIN PRIVATE KEY-----\nMC4CAQAwBQYDK2VwBCIEIIw2yChK1U0uNdd11iVJDnFbzQ4BRK+Gdlv6g+h/dwEl\n-----END PRIVATE KEY-----`\nconst privateKey = await importPKCS8(YourPrivateKey, 'EdDSA')\n\n// 2. 准备JWT的Header\nconst customHeader = {\n  alg: 'EdDSA',\n  kid: 'KDPPQGWYTT'\n}\n\n// 3. 准备Payload\nconst iat = Math.floor(Date.now() / 1000) - 30 // 设置30秒时钟偏差\nconst exp = iat + 900 // 15分钟有效期\nconst customPayload = {\n  sub: '48TNV5FRVG',\n  iat,\n  exp\n}\n\n// 4. 生成并签名JWT\nconst token = await new SignJWT(customPayload)\n  .setProtectedHeader(customHeader)\n  .sign(privateKey)\n\nconsole.log('Generated JWT:', token)\n\nmsg.payload = \"Bearer \" + token\n\nreturn msg",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jose",
+                "module": "jose"
+            }
+        ],
+        "x": 340,
+        "y": 1020,
+        "wires": [
+            [
+                "b693c0a7869b75e7"
+            ]
+        ]
+    },
+    {
+        "id": "41fb891fb0c01265",
+        "type": "json",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 730,
+        "y": 1020,
+        "wires": [
+            [
+                "caeb88dfbe8fb33c"
+            ]
+        ]
+    },
+    {
+        "id": "07cbb570d8f9166c",
+        "type": "gzip",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "",
+        "x": 610,
+        "y": 1020,
+        "wires": [
+            [
+                "41fb891fb0c01265"
+            ]
+        ]
+    },
+    {
+        "id": "83ec83ef172aedc7",
+        "type": "http request",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "访问LLM API",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "https://api.siliconflow.cn/v1/chat/completions",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "Authorization",
+                "valueType": "other",
+                "valueValue": "Bearer sk-ihweasuuaopszqsqszufrbrdhwolicznzcpdpqgxinttwkiw"
+            },
+            {
+                "keyType": "Content-Type",
+                "keyValue": "",
+                "valueType": "application/json",
+                "valueValue": ""
+            }
+        ],
+        "x": 450,
+        "y": 1100,
+        "wires": [
+            [
+                "8a0dce65a4ebedb4"
+            ]
+        ]
+    },
+    {
+        "id": "caeb88dfbe8fb33c",
+        "type": "function",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "消息设置",
+        "func": "const message = {\n  role: \"user\",\n  content: `你是一个中文AI智能家庭助理，这是通过天气API接口获取得到的未来24个小时的天气情况，如果有下雨/下雪/恶劣天气的话就提醒主人，*回答必须在一句话以内，语气略微欢快但别轻佻*：\n        \"\"\"\n        ${JSON.stringify(msg.payload)}\n        \"\"\"\n        `\n}\n\nconst data = {\n  model: \"Qwen/Qwen2.5-7B-Instruct\",\n  messages: [message]\n}\n\nmsg.payload = data\n\nreturn msg",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jose",
+                "module": "jose"
+            }
+        ],
+        "x": 300,
+        "y": 1100,
+        "wires": [
+            [
+                "83ec83ef172aedc7"
+            ]
+        ]
+    },
+    {
+        "id": "8a0dce65a4ebedb4",
+        "type": "json",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 590,
+        "y": 1100,
+        "wires": [
+            [
+                "f4e7c969bf4a1f3a"
+            ]
+        ]
+    },
+    {
+        "id": "f4e7c969bf4a1f3a",
+        "type": "function",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "提取内容",
+        "func": "msg.payload = msg.payload.choices?.[0]?.message.content ?? \"天气预报获取失败\"\nreturn msg",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "jose",
+                "module": "jose"
+            }
+        ],
+        "x": 720,
+        "y": 1100,
+        "wires": [
+            [
+                "7b52593ea18f1dc2"
+            ]
+        ]
+    },
+    {
+        "id": "7b52593ea18f1dc2",
+        "type": "api-call-service",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "",
+        "server": "399a2a4a03353dc7",
+        "version": 7,
+        "debugenabled": true,
+        "action": "",
+        "floorId": [],
+        "areaId": [],
+        "deviceId": [],
+        "entityId": [],
+        "labelId": [],
+        "data": "{\t   \"entity_id\":\"media_player.feixunr1\",\t   \"message\": payload\t}",
+        "dataType": "jsonata",
+        "mergeContext": "",
+        "mustacheAltTags": false,
+        "outputProperties": [],
+        "queue": "none",
+        "blockInputOverrides": true,
+        "domain": "tts",
+        "service": "edge_tts_say",
+        "x": 530,
+        "y": 1200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "de10bb1766ded185",
+        "type": "inject",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "晚上",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "30 10 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 1040,
+        "wires": [
+            [
+                "b0d36d53709c3e48"
+            ]
+        ]
+    },
+    {
+        "id": "f0e068d7f0e60860",
+        "type": "inject",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "早上",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "30 09 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 1000,
+        "wires": [
+            [
+                "b0d36d53709c3e48"
+            ]
+        ]
+    }
+]

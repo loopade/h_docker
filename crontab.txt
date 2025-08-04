@@ -1,0 +1,8 @@
+00 01 * * * /srv/http/bash/settings/addons-data.sh
+@reboot echo none | sudo tee  /sys/class/leds/PWR/trigger ; echo 0 | sudo tee /sys/class/leds/PWR/brightness
+# 0 8,22,23 * * * cd /home/auto && ./go_assistant_linux_aarch64
+0 */2 * * * sh -c 'sed -i "/# GitHub520 Host Start/Q" /etc/hosts && curl https://raw.hellogithub.com/hosts >> /etc/hosts'
+0 3 * * * reboot
+10 3 * * * cp /var/spool/cron/root /home/docker/crontab.txt
+0 2 * * * cd /home/docker && bash auto_backup.sh
+@reboot cd /home/clash-for-linux-install && bash /home/clash-for-linux-install/install.sh && clash on

@@ -37,7 +37,7 @@ from homeassistant.helpers.issue_registry import IssueSeverity, async_create_iss
 from homeassistant.loader import Integration
 from homeassistant.util import dt
 
-from .const import DOMAIN, TV, URL_BASE
+from .const import DOMAIN, TV, URL_BASE, BASE_API_URL
 from .coordinator import HacsUpdateCoordinator
 from .data_client import HacsDataClient
 from .enums import (
@@ -118,6 +118,7 @@ class HacsConfiguration:
     country: str = "ALL"
     debug: bool = False
     dev: bool = False
+    experimental: bool = True
     frontend_repo_url: str = ""
     frontend_repo: str = ""
     plugin_path: str = "www/community/"
@@ -129,6 +130,7 @@ class HacsConfiguration:
     theme_path: str = "themes/"
     theme: bool = False
     token: str = None
+    github_api_base: str = BASE_API_URL
 
     def to_json(self) -> str:
         """Return a json string."""
@@ -688,13 +690,77 @@ class HacsBase:
         if url is None:
             return None
 
+        mirrors = {
+            "hacs-china": {
+                "raw": "https://ghrp2.hacs.vip/raw",
+                "archive": "https://ghrp2.hacs.vip",
+                "release": "https://ghrp2.hacs.vip",
+            },
+            "hacs.vip": {
+                "raw": "https://ghrp.hacs.vip/raw",
+                "archive": "https://ghrp.hacs.vip",
+                "release": "https://ghrp.hacs.vip",
+            },
+
+            # https://ghproxy.com
+            "ghproxy": {
+                "raw": "https://gh-proxy.com/raw.githubusercontent.com",
+                "archive": "https://gh-proxy.com/github.com",
+                "release": "https://gh-proxy.com/github.com",
+            },
+
+            # https://gitmirror.com (cloudflare)
+            "gitmirror": {
+                "raw": "https://raw.gitmirror.com",
+                "archive": "https://hub.gitmirror.com/github.com",
+                "release": "https://hub.gitmirror.com/github.com",
+            },
+
+            # https://ghps.cc (cloudflare)
+            "ghps": {
+                "raw": "https://ghps.cc/raw.githubusercontent.com",
+                "archive": "https://ghps.cc/github.com",
+                "release": "https://ghps.cc/github.com",
+            },
+
+            # https://gh.ddlc.top (cloudflare)
+            "ddlc": {
+                "raw": "https://gh.ddlc.top/raw.githubusercontent.com",
+                "archive": "https://gh.ddlc.top/github.com",
+                "release": "https://gh.ddlc.top/github.com",
+            },
+
+            # https://github.com
+            "github": {
+                "raw": "https://raw.githubusercontent.com",
+                "archive": "https://github.com",
+                "release": "https://github.com",
+            },
+        }
+
+        tries_keys = list(mirrors.keys())
+        tries_left = len(tries_keys) * 2
+
         if not keep_url and "tags/" in url:
             url = url.replace("tags/", "")
 
-        self.log.debug("Trying to download %s", url)
-        timeouts = 0
+        src = url.replace("//github.com/hacs/integration", "//github.com/hacs-china/integration")
+        from math import ceil
 
-        while timeouts < 5:
+        while tries_left > 0:
+
+            url = src
+            mirror = mirrors[tries_keys[0 - ceil(tries_left / 2)]]
+
+            if "/releases/" in url:
+                url = url.replace("https://github.com/", f"{mirror['release']}/")
+            elif "/archive/" in url:
+                url = url.replace("https://github.com/", f"{mirror['archive']}/")
+            else:
+                url = url.replace("https://raw.githubusercontent.com/", f"{mirror['raw']}/")
+
+            self.log.debug("Trying to download %s", url)
+
             try:
                 request = await self.session.get(
                     url=url,
@@ -715,24 +781,22 @@ class HacsBase:
                     "A timeout of 60! seconds was encountered while downloading %s, "
                     "using over 60 seconds to download a single file is not normal. "
                     "This is not a problem with HACS but how your host communicates with GitHub. "
-                    "Retrying up to 5 times to mask/hide your host/network problems to "
-                    "stop the flow of issues opened about it. "
+                    "check the network on the host running Home Assistant. "
                     "Tries left %s",
                     url,
-                    (4 - timeouts),
+                    tries_left,
                 )
-                timeouts += 1
-                await asyncio.sleep(1)
-                continue
+            except BaseException as exception:  # lgtm [py/catch-base-exception] pylint: disable=broad-except
+                self.log.exception("Download failed - %s", exception)
 
-            except (
-                # lgtm [py/catch-base-exception] pylint: disable=broad-except
-                BaseException
-            ) as exception:
-                if not nolog:
-                    self.log.exception("Download failed - %s", exception)
+            tries_left -= 1
+            await asyncio.sleep(1)
+            continue
 
-            return None
+        if not nolog:
+            self.log.error("Download from %s failed", url)
+
+        return None
 
     async def async_recreate_entities(self) -> None:
         """Recreate entities."""

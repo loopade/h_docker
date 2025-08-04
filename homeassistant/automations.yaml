@@ -18,7 +18,7 @@
   - action: tts.edge_tts_say
     data:
       cache: false
-      entity_id: media_player.dlna_feixun_r1
+      entity_id: media_player.feixunr1
       message: 主人，当前湿度低于40%，请打开加湿器。
   mode: single
 - id: '1744550092179'
@@ -63,6 +63,54 @@
     metadata: {}
     data:
       cache: false
-      entity_id: media_player.dlna_feixun_r1
+      entity_id: media_player.feixunr1
       message: 主人，该铲猫粑粑了
+  mode: single
+- id: '1754148473752'
+  alias: 猫-饮水机
+  description: ''
+  triggers:
+  - type: motion
+    device_id: 6c63308d3c5fce983753ec4f48cb697c
+    entity_id: 63a53b611a84033af68cb88fcc70c04c
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - action: notify.persistent_notification
+    metadata: {}
+    data:
+      message: 猫抵达饮水机
+  mode: single
+- id: '1754148519904'
+  alias: 猫-主卧
+  description: ''
+  triggers:
+  - type: motion
+    device_id: f306bad1fc7c4111e182ea2d10fde3f6
+    entity_id: 7d407fa9380c1fe65a252328e499a47d
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - action: notify.persistent_notification
+    metadata: {}
+    data:
+      message: 猫抵达主卧
+  mode: single
+- id: '1754317080707'
+  alias: 猫-猫砂盆
+  description: ''
+  triggers:
+  - type: motion
+    device_id: 3a6725a72ca7e8a6806a7cb679c93f88
+    entity_id: 40c20add8770c87a21f97ff3bca187a6
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - action: notify.persistent_notification
+    metadata: {}
+    data:
+      message: 猫抵达猫砂盆
   mode: single
