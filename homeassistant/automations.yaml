@@ -81,6 +81,10 @@
     metadata: {}
     data:
       message: 猫抵达饮水机
+  - action: notify.mobile_app_universal
+    metadata: {}
+    data:
+      message: 猫抵达饮水机
   mode: single
 - id: '1754148519904'
   alias: 猫-主卧
@@ -97,6 +101,10 @@
     metadata: {}
     data:
       message: 猫抵达主卧
+  - action: notify.mobile_app_universal
+    metadata: {}
+    data:
+      message: 猫抵达主卧
   mode: single
 - id: '1754317080707'
   alias: 猫-猫砂盆
@@ -110,6 +118,10 @@
   conditions: []
   actions:
   - action: notify.persistent_notification
+    metadata: {}
+    data:
+      message: 猫抵达猫砂盆
+  - action: notify.mobile_app_universal
     metadata: {}
     data:
       message: 猫抵达猫砂盆
