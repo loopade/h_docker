@@ -41,25 +41,31 @@ substitutions:
   $missiontImp: "MissionImp:d=16,o=6,b=95:32d,32d#,32d,32d#,32d,32d#,32d,32d#,32d,32d,32d#,32e,32f,32f#,32g,g"
   $gadget : "Gadget:d=16,o=5,b=50:32d#,32f,32f#,32g#,a#,f#,a,f,g#,f#"
   $di: "di:d=16,o=5,b=70:32d#"
+  $didi: "di:d=16,o=5,b=70:32d#,32d#"
 
 # 变量 
 globals:
   - id: servo_angle_turn_on # 开灯角度
     type: int
-    restore_value: yes
+    restore_value: True
     initial_value: '150'
   - id: servo_angle_turn_off # 关灯角度
     type: int
-    restore_value: yes
+    restore_value: True
     initial_value: '40'
   - id: action_state # 记录上次是关灯还是开灯，关灯0，开灯1
     type: int
-    restore_value: no
+    restore_value: False
     initial_value: '0'
   - id: ir_state
     type: int
-    restore_value: no
+    restore_value: False
     initial_value: '0'
+  - id: rc_toggle_times
+    type: int
+    restore_value: False
+    initial_value: '0'
+
 
 output:
   # 蜂鸣器
@@ -101,6 +107,12 @@ sensor:
       # state_topic: $devicename/humidity
     update_interval: 60s    
     model: DHT11
+  - platform: template
+    id: rc_toggle_times_ss
+    name: Remote Toggle Times
+    accuracy_decimals: 0
+    lambda: |-
+      return id(rc_toggle_times);
 
 # mqtt:
 #   id: mqtt_client
@@ -128,19 +140,17 @@ switch:
         - script.execute: 
             id: switch_light
             state: 'on'
-        # - mqtt.publish:
-        #     topic: $devicename/matrix/status
-        #     payload: 'on'
-        #     retain: true
+        - text_sensor.template.publish:
+            id: matrix_status
+            state: "on"
     turn_off_action:
       then:
         - script.execute: 
             id: switch_light
             state: 'off'
-        # - mqtt.publish:
-        #     topic: $devicename/matrix/status
-        #     payload: 'off'
-        #     retain: true
+        - text_sensor.template.publish:
+            id: matrix_status
+            state: "off"
 
 text_sensor:
   # 显示屏
@@ -189,7 +199,7 @@ text_sensor:
             ESP_LOGD("IR Remote", "Recv: %s", x.c_str());
         - remote_transmitter.transmit_raw:
             code: !lambda |-
-              std::vector<int> result;
+              std::vector<long> result;
               bool inNumber = false;
               int currentNumber = 0;
               int sign = 1; // 用于跟踪符号，默认为正数
@@ -277,6 +287,11 @@ script:
       - remote_transmitter.transmit_raw:
           code: [9094,-4509,595,-543,594,-544,594,-544,594,-543,595,-544,594,-542,596,-526,611,-1683,569,-1680,568,-1681,568,-1680,569,-1681,569,-1680,569,-1680,569,-1681,569,-541,595,-1682,569,-540,596,-522,601,-557,595,-500,639,-542,597,-543,596,-542,595,-542,595,-1682,569,-1680,569,-1679,570,-1679,568,-1680,569,-1680,568,-1680,569]
           carrier_frequency: 38kHz
+      - rtttl.play: $didi
+      - lambda: |-
+          id(rc_toggle_times) += 1;
+          id(rc_toggle_times_ss).publish_state(id(rc_toggle_times));
+      - delay: 1s
       #- lambda: |-
       #    float level = 0.;
       #    if (!id(action_state)) {

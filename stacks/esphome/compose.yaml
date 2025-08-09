@@ -13,9 +13,8 @@ services:
     environment:
       - USERNAME=ming
       - PASSWORD=baohuiming
-      - HTTP_PROXY=http://host.docker.internal:7890
-      - HTTPS_PROXY=http://host.docker.internal:7890
+      - HTTP_PROXY=http://127.0.0.1:7890
+      - HTTPS_PROXY=http://127.0.0.1:7890
       - NO_PROXY=localhost,127.0.0.1
-    extra_hosts:
-      - host.docker.internal:host-gateway
+    network_mode: host
 networks: {}

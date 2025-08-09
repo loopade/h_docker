@@ -467,5 +467,47 @@
                 "b0d36d53709c3e48"
             ]
         ]
+    },
+    {
+        "id": "b44bff1269b520a1",
+        "type": "trigger-state",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "RC Toggle",
+        "server": "399a2a4a03353dc7",
+        "version": 5,
+        "inputs": 0,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entities": {
+            "entity": [
+                "sensor.beep_remote_toggle_times"
+            ],
+            "substring": [],
+            "regex": []
+        },
+        "debugEnabled": false,
+        "constraints": [
+            {
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "current_state",
+                "propertyValue": "new_state.state",
+                "comparatorType": ">",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "0"
+            }
+        ],
+        "customOutputs": [],
+        "outputInitially": false,
+        "stateType": "num",
+        "enableInput": false,
+        "x": 140,
+        "y": 900,
+        "wires": [
+            [
+                "b0d36d53709c3e48"
+            ],
+            []
+        ]
     }
 ]

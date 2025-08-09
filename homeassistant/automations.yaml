@@ -126,3 +126,19 @@
     data:
       message: 猫抵达猫砂盆
   mode: single
+- id: '1754719621349'
+  alias: 魔法按钮
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - sensor.beep_remote_toggle_times
+    to:
+  conditions: []
+  actions:
+  - action: tts.edge_tts_say
+    metadata: {}
+    data:
+      entity_id: media_player.feixunr1
+      message: 主人，有何吩咐~{{relative_time(states.sensor.beep_remote_toggle_times.last_changed)}}
+  mode: single

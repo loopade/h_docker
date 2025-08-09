@@ -389,7 +389,7 @@
         "server": "399a2a4a03353dc7",
         "version": 7,
         "debugenabled": true,
-        "action": "",
+        "action": "tts.edge_tts_say",
         "floorId": [],
         "areaId": [],
         "deviceId": [],
@@ -404,7 +404,7 @@
         "blockInputOverrides": true,
         "domain": "tts",
         "service": "edge_tts_say",
-        "x": 530,
+        "x": 560,
         "y": 1200,
         "wires": [
             []
@@ -467,5 +467,64 @@
                 "b0d36d53709c3e48"
             ]
         ]
+    },
+    {
+        "id": "b44bff1269b520a1",
+        "type": "trigger-state",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "RC Toggle",
+        "server": "399a2a4a03353dc7",
+        "version": 5,
+        "inputs": 0,
+        "outputs": 2,
+        "exposeAsEntityConfig": "",
+        "entities": {
+            "entity": [
+                "sensor.beep_remote_toggle_times"
+            ],
+            "substring": [],
+            "regex": []
+        },
+        "debugEnabled": false,
+        "constraints": [
+            {
+                "targetType": "this_entity",
+                "targetValue": "",
+                "propertyType": "current_state",
+                "propertyValue": "new_state.state",
+                "comparatorType": ">",
+                "comparatorValueDatatype": "str",
+                "comparatorValue": "-1"
+            }
+        ],
+        "customOutputs": [],
+        "outputInitially": false,
+        "stateType": "num",
+        "enableInput": false,
+        "x": 120,
+        "y": 1160,
+        "wires": [
+            [
+                "26801ac46d796fc6",
+                "b0d36d53709c3e48"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "26801ac46d796fc6",
+        "type": "debug",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 310,
+        "y": 1180,
+        "wires": []
     }
 ]
