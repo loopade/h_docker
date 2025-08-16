@@ -166,7 +166,7 @@
         "method": "GET",
         "ret": "bin",
         "paytoqs": "ignore",
-        "url": "https://px3yfqmwdt.re.qweatherapi.com/v7/weather/24h?location=101010100&lang=en",
+        "url": "https://px3yfqmwdt.re.qweatherapi.com/v7/weather/24h?location=116.35,40.06&lang=en",
         "tls": "",
         "persist": false,
         "proxy": "",

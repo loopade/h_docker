@@ -166,7 +166,7 @@
         "method": "GET",
         "ret": "bin",
         "paytoqs": "ignore",
-        "url": "https://px3yfqmwdt.re.qweatherapi.com/v7/weather/24h?location=101010100&lang=en",
+        "url": "https://px3yfqmwdt.re.qweatherapi.com/v7/weather/24h?location=101010700&lang=en",
         "tls": "",
         "persist": false,
         "proxy": "",
@@ -494,37 +494,20 @@
                 "propertyValue": "new_state.state",
                 "comparatorType": ">",
                 "comparatorValueDatatype": "str",
-                "comparatorValue": "-1"
+                "comparatorValue": "0"
             }
         ],
         "customOutputs": [],
         "outputInitially": false,
         "stateType": "num",
         "enableInput": false,
-        "x": 120,
-        "y": 1160,
+        "x": 140,
+        "y": 900,
         "wires": [
             [
-                "26801ac46d796fc6",
                 "b0d36d53709c3e48"
             ],
             []
         ]
-    },
-    {
-        "id": "26801ac46d796fc6",
-        "type": "debug",
-        "z": "d6ac0adf6a8f5b74",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 310,
-        "y": 1180,
-        "wires": []
     }
 ]
