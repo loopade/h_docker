@@ -142,3 +142,23 @@
       entity_id: media_player.feixunr1
       message: 主人，有何吩咐~{{relative_time(states.sensor.beep_remote_toggle_times.last_changed)}}
   mode: single
+- id: '1755578602327'
+  alias: 猫-次卧
+  description: ''
+  triggers:
+  - type: motion
+    device_id: a2aaeaaaa6f0239d37ccfdf2bf0269af
+    entity_id: 148afbd647b9ba68d7699927208f2c36
+    domain: binary_sensor
+    trigger: device
+  conditions: []
+  actions:
+  - action: notify.persistent_notification
+    metadata: {}
+    data:
+      message: 猫抵达次卧
+  - action: notify.mobile_app_universal
+    metadata: {}
+    data:
+      message: 猫抵达次卧
+  mode: single
