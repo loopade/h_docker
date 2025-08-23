@@ -2,7 +2,7 @@ name: homeassistant
 services:
   homeassistant:
     container_name: homeassistant
-    image: m.daocloud.io/ghcr.io/home-assistant/home-assistant:2025.7
+    image: m.daocloud.io/ghcr.io/home-assistant/home-assistant:2025.8
     volumes:
       - /home/docker/homeassistant:/config
       - /etc/localtime:/etc/localtime:ro
