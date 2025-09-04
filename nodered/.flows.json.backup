@@ -320,7 +320,7 @@
         "type": "function",
         "z": "d6ac0adf6a8f5b74",
         "name": "消息设置",
-        "func": "const message = {\n  role: \"user\",\n  content: `你是一个中文AI智能家庭助理，这是通过天气API接口获取得到的未来24个小时的天气情况，如果有下雨/下雪/恶劣天气的话就提醒主人，*回答必须在一句话以内，语气略微欢快但别轻佻*：\n        \"\"\"\n        ${JSON.stringify(msg.payload)}\n        \"\"\"\n        `\n}\n\nconst data = {\n  model: \"Qwen/Qwen2.5-7B-Instruct\",\n  messages: [message]\n}\n\nmsg.payload = data\n\nreturn msg",
+        "func": "const message = {\n  role: \"user\",\n  content: `你是一个中文AI智能家庭助理，这是通过天气API接口获取得到的未来24个小时的天气情况，如果有下雨/下雪/恶劣天气的话就提醒主人，最好精确到时间段，*回答必须在一句话以内，语气略微欢快但别轻佻*：\n        \"\"\"\n        ${JSON.stringify(msg.payload)}\n        \"\"\"\n        `\n}\n\nconst data = {\n  model: \"Qwen/Qwen2.5-7B-Instruct\",\n  messages: [message]\n}\n\nmsg.payload = data\n\nreturn msg",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
