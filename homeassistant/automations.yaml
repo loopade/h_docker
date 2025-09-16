@@ -162,3 +162,19 @@
     data:
       message: 猫抵达次卧
   mode: single
+- id: '1758031281645'
+  alias: 音箱状态变化
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - media_player.feixunr1
+    from:
+    to: unavailable
+  conditions: []
+  actions:
+  - action: notify.mobile_app_universal
+    metadata: {}
+    data:
+      message: 音箱失联了
+  mode: single
