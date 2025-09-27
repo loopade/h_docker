@@ -2,7 +2,7 @@ name: esphome
 services:
   esphome:
     container_name: esphome
-    image: m.daocloud.io/ghcr.io/esphome/esphome:2025.8
+    image: m.daocloud.io/ghcr.io/esphome/esphome:2025.9
     volumes:
       - /home/docker/esphome:/config
       - /etc/localtime:/etc/localtime:ro

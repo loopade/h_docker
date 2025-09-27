@@ -81,6 +81,7 @@
     metadata: {}
     data:
       message: 猫抵达饮水机
+    enabled: false
   - action: notify.mobile_app_universal
     metadata: {}
     data:
@@ -101,6 +102,7 @@
     metadata: {}
     data:
       message: 猫抵达主卧
+    enabled: false
   - action: notify.mobile_app_universal
     metadata: {}
     data:
@@ -121,6 +123,7 @@
     metadata: {}
     data:
       message: 猫抵达猫砂盆
+    enabled: false
   - action: notify.mobile_app_universal
     metadata: {}
     data:
@@ -157,6 +160,7 @@
     metadata: {}
     data:
       message: 猫抵达次卧
+    enabled: false
   - action: notify.mobile_app_universal
     metadata: {}
     data:
