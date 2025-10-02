@@ -181,4 +181,8 @@
     metadata: {}
     data:
       message: 音箱失联了
+  - action: notify.persistent_notification
+    metadata: {}
+    data:
+      message: 音箱失联了
   mode: single
