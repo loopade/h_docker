@@ -187,8 +187,8 @@
                 "valueValue": "text/plain; charset=utf-8"
             }
         ],
-        "x": 440,
-        "y": 180,
+        "x": 560,
+        "y": 200,
         "wires": [
             [
                 "07cbb570d8f9166c"
@@ -220,7 +220,7 @@
         "y": 120,
         "wires": [
             [
-                "b0d36d53709c3e48"
+                "cc33ae7c1b98172e"
             ]
         ]
     },
@@ -241,8 +241,8 @@
                 "module": "jose"
             }
         ],
-        "x": 300,
-        "y": 180,
+        "x": 420,
+        "y": 200,
         "wires": [
             [
                 "b693c0a7869b75e7"
@@ -257,8 +257,8 @@
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 690,
-        "y": 180,
+        "x": 810,
+        "y": 200,
         "wires": [
             [
                 "caeb88dfbe8fb33c"
@@ -270,8 +270,8 @@
         "type": "gzip",
         "z": "d6ac0adf6a8f5b74",
         "name": "",
-        "x": 570,
-        "y": 180,
+        "x": 690,
+        "y": 200,
         "wires": [
             [
                 "41fb891fb0c01265"
@@ -307,8 +307,8 @@
                 "valueValue": ""
             }
         ],
-        "x": 410,
-        "y": 260,
+        "x": 530,
+        "y": 280,
         "wires": [
             [
                 "8a0dce65a4ebedb4"
@@ -332,8 +332,8 @@
                 "module": "jose"
             }
         ],
-        "x": 260,
-        "y": 260,
+        "x": 380,
+        "y": 280,
         "wires": [
             [
                 "83ec83ef172aedc7"
@@ -348,8 +348,8 @@
         "property": "payload",
         "action": "",
         "pretty": false,
-        "x": 550,
-        "y": 260,
+        "x": 670,
+        "y": 280,
         "wires": [
             [
                 "f4e7c969bf4a1f3a"
@@ -373,8 +373,8 @@
                 "module": "jose"
             }
         ],
-        "x": 680,
-        "y": 260,
+        "x": 800,
+        "y": 280,
         "wires": [
             [
                 "7b52593ea18f1dc2"
@@ -404,8 +404,8 @@
         "blockInputOverrides": true,
         "domain": "tts",
         "service": "edge_tts_say",
-        "x": 520,
-        "y": 360,
+        "x": 640,
+        "y": 380,
         "wires": [
             []
         ]
@@ -435,7 +435,7 @@
         "y": 200,
         "wires": [
             [
-                "b0d36d53709c3e48"
+                "cc33ae7c1b98172e"
             ]
         ]
     },
@@ -464,7 +464,7 @@
         "y": 160,
         "wires": [
             [
-                "b0d36d53709c3e48"
+                "cc33ae7c1b98172e"
             ]
         ]
     },
@@ -505,9 +505,29 @@
         "y": 60,
         "wires": [
             [
-                "b0d36d53709c3e48"
+                "cc33ae7c1b98172e"
             ],
             []
+        ]
+    },
+    {
+        "id": "cc33ae7c1b98172e",
+        "type": "function",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "夜间勿扰",
+        "func": "function isNightTime() {\n    const now = new Date();\n    const hours = now.getHours();\n    return hours >= 23 || hours < 7; // 23:00 - 7:00 视为夜间\n}\n\nif (isNightTime()) {\n    return;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 120,
+        "wires": [
+            [
+                "b0d36d53709c3e48"
+            ]
         ]
     }
 ]

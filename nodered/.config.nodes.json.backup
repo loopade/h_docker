@@ -1,7 +1,7 @@
 {
     "node-red": {
         "name": "node-red",
-        "version": "4.0.9",
+        "version": "4.1.0",
         "local": false,
         "user": false,
         "nodes": {
@@ -502,6 +502,7 @@
                 "module": "node-red-contrib-home-assistant-websocket",
                 "file": "/data/node_modules/node-red-contrib-home-assistant-websocket/dist/index.js"
             }
-        }
+        },
+        "pending_version": "0.78.1"
     }
 }
