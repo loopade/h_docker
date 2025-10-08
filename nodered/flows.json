@@ -395,7 +395,7 @@
         "deviceId": [],
         "entityId": [],
         "labelId": [],
-        "data": "{\t   \"entity_id\":\"media_player.feixunr1\",\t   \"message\": payload\t}",
+        "data": "{\t   \"entity_id\":\"media_player.atv_181\",\t   \"message\": payload\t}",
         "dataType": "jsonata",
         "mergeContext": "",
         "mustacheAltTags": false,

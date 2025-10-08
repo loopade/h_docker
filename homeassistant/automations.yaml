@@ -63,7 +63,7 @@
     metadata: {}
     data:
       cache: false
-      entity_id: media_player.feixunr1
+      entity_id: media_player.atv_181
       message: 主人，该铲猫粑粑了
   mode: single
 - id: '1754148473752'
@@ -172,7 +172,7 @@
   triggers:
   - trigger: state
     entity_id:
-    - media_player.feixunr1
+    - media_player.atv_181
     from:
     to: unavailable
   conditions: []

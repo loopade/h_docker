@@ -514,7 +514,7 @@
         "id": "cc33ae7c1b98172e",
         "type": "function",
         "z": "d6ac0adf6a8f5b74",
-        "name": "时间校验",
+        "name": "夜间勿扰",
         "func": "function isNightTime() {\n    const now = new Date();\n    const hours = now.getHours();\n    return hours >= 23 || hours < 7; // 23:00 - 7:00 视为夜间\n}\n\nif (isNightTime()) {\n    return;\n}\n\nreturn msg;",
         "outputs": 1,
         "timeout": 0,

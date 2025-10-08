@@ -6,6 +6,6 @@
     "dependencies": {
         "jose": "^6.0.12",
         "node-red-contrib-gzip": "~0.0.3",
-        "node-red-contrib-home-assistant-websocket": "~0.78.1"
+        "node-red-contrib-home-assistant-websocket": "~0.78.2"
     }
 }

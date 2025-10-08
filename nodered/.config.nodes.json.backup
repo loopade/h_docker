@@ -448,7 +448,7 @@
     },
     "node-red-contrib-home-assistant-websocket": {
         "name": "node-red-contrib-home-assistant-websocket",
-        "version": "0.77.2",
+        "version": "0.78.1",
         "local": true,
         "user": true,
         "nodes": {
@@ -503,6 +503,6 @@
                 "file": "/data/node_modules/node-red-contrib-home-assistant-websocket/dist/index.js"
             }
         },
-        "pending_version": "0.78.1"
+        "pending_version": "0.78.2"
     }
 }
