@@ -86,6 +86,11 @@
     metadata: {}
     data:
       message: 猫抵达饮水机
+  - action: counter.increment
+    metadata: {}
+    data: {}
+    target:
+      entity_id: counter.he_shui
   mode: single
 - id: '1754148519904'
   alias: 猫-主卧
@@ -107,6 +112,11 @@
     metadata: {}
     data:
       message: 猫抵达主卧
+  - action: counter.increment
+    metadata: {}
+    data: {}
+    target:
+      entity_id: counter.zao_fang_zhu_wo
   mode: single
 - id: '1754317080707'
   alias: 猫-猫砂盆
@@ -128,6 +138,11 @@
     metadata: {}
     data:
       message: 猫抵达猫砂盆
+  - action: counter.increment
+    metadata: {}
+    data: {}
+    target:
+      entity_id: counter.la_ba_ba
   mode: single
 - id: '1754719621349'
   alias: 魔法按钮
@@ -165,6 +180,11 @@
     metadata: {}
     data:
       message: 猫抵达次卧
+  - action: counter.increment
+    metadata: {}
+    data: {}
+    target:
+      entity_id: counter.zao_fang_ci_wo
   mode: single
 - id: '1758031281645'
   alias: 音箱状态变化
@@ -185,4 +205,48 @@
     metadata: {}
     data:
       message: 音箱失联了
+  mode: single
+- id: '1760773455715'
+  alias: 猫-行为日报
+  description: ''
+  triggers:
+  - trigger: time
+    at: 00:00:00
+  conditions: []
+  actions:
+  - action: notify.persistent_notification
+    metadata: {}
+    data:
+      message: 本日大暑喝水{{states.counter.he_shui.state}}次，拉粑粑{{states.counter.la_ba_ba.state}}次。
+  - action: notify.mobile_app_universal
+    metadata: {}
+    data:
+      message: 大暑本日喝水{{states.counter.he_shui.state}}次，拉粑粑{{states.counter.la_ba_ba.state}}次。
+  - parallel:
+    - sequence:
+      - wait_for_trigger:
+        - trigger: time
+          at: 09:00:00
+        continue_on_timeout: true
+      - action: tts.edge_tts_say
+        metadata: {}
+        data:
+          cache: false
+          entity_id: media_player.atv_181
+          message: 大暑昨天一共喝水{{states.counter.he_shui.state}}次，拉粑粑{{states.counter.la_ba_ba.state}}次。
+    - sequence:
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 1
+          milliseconds: 0
+      - action: counter.reset
+        metadata: {}
+        data: {}
+        target:
+          entity_id:
+          - counter.he_shui
+          - counter.la_ba_ba
+          - counter.zao_fang_ci_wo
+          - counter.zao_fang_zhu_wo
   mode: single
