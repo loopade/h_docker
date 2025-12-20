@@ -389,13 +389,15 @@
         "server": "399a2a4a03353dc7",
         "version": 7,
         "debugenabled": true,
-        "action": "tts.edge_tts_say",
+        "action": "tts.speak",
         "floorId": [],
         "areaId": [],
         "deviceId": [],
-        "entityId": [],
+        "entityId": [
+            "tts.edge_tts"
+        ],
         "labelId": [],
-        "data": "{\t   \"entity_id\":\"media_player.atv_181\",\t   \"message\": payload\t}",
+        "data": "{\t   \"media_player_entity_id\":\"media_player.feixun\",\t   \"message\": payload\t}",
         "dataType": "jsonata",
         "mergeContext": "",
         "mustacheAltTags": false,
@@ -403,8 +405,8 @@
         "queue": "none",
         "blockInputOverrides": true,
         "domain": "tts",
-        "service": "edge_tts_say",
-        "x": 640,
+        "service": "speak",
+        "x": 620,
         "y": 380,
         "wires": [
             []
