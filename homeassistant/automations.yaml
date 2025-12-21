@@ -15,11 +15,13 @@
     entity_id: sensor.beep_humidity
     below: 40
   actions:
-  - action: tts.edge_tts_say
+  - action: tts.speak
+    target:
+      entity_id: tts.edge_tts
     data:
-      cache: false
-      entity_id: media_player.feixunr1
-      message: 主人，当前湿度低于40%，请打开加湿器。
+      cache: true
+      media_player_entity_id: media_player.feixun
+      message: 主人，请打开加湿器~
   mode: single
 - id: '1744550092179'
   alias: 定时关LED屏显
@@ -59,12 +61,14 @@
     at: '22:30:00'
   conditions: []
   actions:
-  - action: tts.edge_tts_say
+  - action: tts.speak
     metadata: {}
     data:
-      cache: false
-      entity_id: media_player.atv_181
-      message: 主人，该铲猫粑粑了
+      cache: true
+      message: 主人，该铲猫粑粑了~
+      media_player_entity_id: media_player.feixun
+    target:
+      entity_id: tts.edge_tts
   mode: single
 - id: '1754148473752'
   alias: 猫-饮水机
