@@ -1,0 +1,9 @@
+name: yisier1npc
+services:
+  npc:
+    restart: always
+    container_name: npc
+    network_mode: host
+    image: yisier1/npc
+    command: -server=home.baohuiming.net:8024 -vkey=721c0d11be -type=tcp
+networks: {}
