@@ -1,0 +1,9 @@
+services:
+  copaw:
+    image: agentscope/copaw:latest
+    container_name: copaw
+    ports:
+      - 8088:8088
+    volumes:
+      - /home/docker/copaw:/app/working
+networks: {}

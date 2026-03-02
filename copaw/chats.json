@@ -1,0 +1,15 @@
+{
+  "chats": [
+    {
+      "channel": "feishu",
+      "created_at": "2026-03-02T15:25:36.367465Z",
+      "id": "5bf2f637-3860-41d3-a3c8-aa5576e55397",
+      "meta": {},
+      "name": "@_user_1 你",
+      "session_id": "6ac15a76",
+      "updated_at": "2026-03-02T16:22:10.928654",
+      "user_id": "ou_a3bf26ba496e5f9a7689606f92f1d0f9"
+    }
+  ],
+  "version": 1
+}

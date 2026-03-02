@@ -1,0 +1,81 @@
+{
+  "channels": {
+    "imessage": {
+      "enabled": false,
+      "bot_prefix": "",
+      "db_path": "~/Library/Messages/chat.db",
+      "poll_sec": 1.0
+    },
+    "discord": {
+      "enabled": false,
+      "bot_prefix": "",
+      "bot_token": "",
+      "http_proxy": "",
+      "http_proxy_auth": ""
+    },
+    "dingtalk": {
+      "enabled": false,
+      "bot_prefix": "",
+      "client_id": "",
+      "client_secret": "",
+      "media_dir": "~/.copaw/media"
+    },
+    "feishu": {
+      "enabled": true,
+      "bot_prefix": "@OpenClaw",
+      "app_id": "cli_a9144828d8f81cd2",
+      "app_secret": "tiMOn5SB2P8NCCgzy4ADIc6MtgOJCnqK",
+      "encrypt_key": "",
+      "verification_token": "",
+      "media_dir": "~/.copaw/media"
+    },
+    "qq": {
+      "enabled": false,
+      "bot_prefix": "",
+      "app_id": "",
+      "client_secret": ""
+    },
+    "console": {
+      "enabled": true,
+      "bot_prefix": ""
+    }
+  },
+  "mcp": {
+    "clients": {
+      "tavily_search": {
+        "name": "tavily_mcp",
+        "description": "",
+        "enabled": false,
+        "command": "npx",
+        "args": [
+          "-y",
+          "tavily-mcp@latest"
+        ],
+        "env": {
+          "TAVILY_API_KEY": ""
+        }
+      }
+    }
+  },
+  "last_api": {
+    "host": "0.0.0.0",
+    "port": 8088
+  },
+  "agents": {
+    "defaults": {
+      "heartbeat": null
+    },
+    "running": {
+      "max_iters": 50,
+      "max_input_length": 131072
+    },
+    "language": "zh",
+    "installed_md_files_language": null
+  },
+  "last_dispatch": {
+    "channel": "feishu",
+    "user_id": "ou_a3bf26ba496e5f9a7689606f92f1d0f9",
+    "session_id": "6ac15a76"
+  },
+  "show_tool_details": true
+}
