@@ -71,7 +71,7 @@
       entity_id: tts.edge_tts
   mode: single
 - id: '1754148473752'
-  alias: 猫-饮水机
+  alias: 猫-喂饭机
   description: ''
   triggers:
   - type: motion
@@ -89,15 +89,15 @@
   - action: notify.mobile_app_universal
     metadata: {}
     data:
-      message: 猫抵达饮水机
+      message: 猫抵达喂饭机
   - action: counter.increment
     metadata: {}
     data: {}
     target:
-      entity_id: counter.he_shui
+      entity_id: counter.chi_fan
   mode: single
 - id: '1754148519904'
-  alias: 猫-主卧
+  alias: 猫-饮水机
   description: ''
   triggers:
   - type: motion
@@ -110,17 +110,18 @@
   - action: notify.persistent_notification
     metadata: {}
     data:
-      message: 猫抵达主卧
+      message: 猫喝水
     enabled: false
   - action: notify.mobile_app_universal
     metadata: {}
     data:
-      message: 猫抵达主卧
+      message: 猫抵达饮水机
   - action: counter.increment
     metadata: {}
     data: {}
     target:
-      entity_id: counter.zao_fang_zhu_wo
+      entity_id:
+      - counter.he_shui
   mode: single
 - id: '1754317080707'
   alias: 猫-猫砂盆
