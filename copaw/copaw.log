@@ -1,0 +1,5 @@
+2026-03-07 10:03:39 | Using local Qwen tokenizer from /app/venv/lib/python3.11/site-packages/copaw/tokenizer
+2026-03-07 10:04:36 | feishu channel started (app_id=cli_a9144828)
+2026-03-07 10:04:36 | feishu WebSocket connecting (long connection)...
+2026-03-07 10:04:36 | Console channel started
+2026-03-07 10:04:36 | ConfigWatcher started (poll=2.0s, path=/app/working/config.json)

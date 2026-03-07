@@ -2,7 +2,7 @@ name: nodered
 services:
   node-red:
     container_name: nodered
-    image: m.daocloud.io/docker.io/nodered/node-red:4.1.0
+    image: docker.io/nodered/node-red:4.1.7
     volumes:
       - /home/docker/nodered:/data
     restart: always

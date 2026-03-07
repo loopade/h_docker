@@ -1,7 +1,7 @@
 {
     "node-red": {
         "name": "node-red",
-        "version": "4.1.0",
+        "version": "4.1.7",
         "local": false,
         "user": false,
         "nodes": {
@@ -427,42 +427,15 @@
             }
         }
     },
-    "node-red-contrib-gzip": {
-        "name": "node-red-contrib-gzip",
-        "version": "0.0.3",
-        "local": true,
-        "user": true,
-        "nodes": {
-            "markdown": {
-                "name": "markdown",
-                "types": [
-                    "gzip"
-                ],
-                "enabled": true,
-                "local": true,
-                "user": false,
-                "module": "node-red-contrib-gzip",
-                "file": "/data/node_modules/node-red-contrib-gzip/lib/gzip.js"
-            }
-        }
-    },
     "node-red-contrib-home-assistant-websocket": {
         "name": "node-red-contrib-home-assistant-websocket",
-        "version": "0.78.1",
+        "version": "0.80.3",
         "local": true,
         "user": true,
         "nodes": {
             "all": {
                 "name": "all",
                 "types": [
-                    "ha_entity_filter",
-                    "ha_sidebar",
-                    "ha_sidebar_toolbar",
-                    "x-tmpl-handlebars",
-                    "x-tmpl-handlebars",
-                    "x-tmpl-handlebars",
-                    "x-tmpl-handlebars",
-                    "x-tmpl-handlebars",
                     "api-call-service",
                     "ha-api",
                     "ha-binary-sensor",
@@ -494,7 +467,15 @@
                     "ha-update-config",
                     "ha-wait-until",
                     "ha-webhook",
-                    "ha-zone"
+                    "ha-zone",
+                    "ha_entity_filter",
+                    "ha_sidebar",
+                    "ha_sidebar_toolbar",
+                    "x-tmpl-handlebars",
+                    "x-tmpl-handlebars",
+                    "x-tmpl-handlebars",
+                    "x-tmpl-handlebars",
+                    "x-tmpl-handlebars"
                 ],
                 "enabled": true,
                 "local": true,
@@ -502,7 +483,6 @@
                 "module": "node-red-contrib-home-assistant-websocket",
                 "file": "/data/node_modules/node-red-contrib-home-assistant-websocket/dist/index.js"
             }
-        },
-        "pending_version": "0.78.2"
+        }
     }
 }
