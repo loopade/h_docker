@@ -233,12 +233,14 @@
         - trigger: time
           at: 09:00:00
         continue_on_timeout: true
-      - action: tts.edge_tts_say
+      - action: tts.speak
         metadata: {}
         data:
           cache: false
-          entity_id: media_player.atv_181
           message: 大暑昨天一共喝水{{states.counter.he_shui.state}}次，拉粑粑{{states.counter.la_ba_ba.state}}次。
+          media_player_entity_id: media_player.feixun
+        target:
+          entity_id: tts.edge_tts
     - sequence:
       - delay:
           hours: 0
@@ -253,5 +255,5 @@
           - counter.he_shui
           - counter.la_ba_ba
           - counter.zao_fang_ci_wo
-          - counter.zao_fang_zhu_wo
+          - counter.chi_fan
   mode: single

@@ -3,3 +3,6 @@
 2026-03-07 10:04:36 | feishu WebSocket connecting (long connection)...
 2026-03-07 10:04:36 | Console channel started
 2026-03-07 10:04:36 | ConfigWatcher started (poll=2.0s, path=/app/working/config.json)
+2026-03-08 11:45:29 | ConfigWatcher stopped
+2026-03-08 11:45:29 | console channel stopped
+2026-03-08 11:45:34 | feishu channel stopped

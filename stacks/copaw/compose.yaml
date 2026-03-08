@@ -6,6 +6,6 @@ services:
       - /home/docker/copaw:/app/working
     ports:
       - 8088:8088
-    restart: always
+    restart: no
     network_mode: host
 networks: {}
