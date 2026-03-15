@@ -1,4 +1,31 @@
 {
   "version": 1,
-  "jobs": []
+  "jobs": [
+    {
+      "id": "af859a5d-d696-4cdb-9977-c5b1f914e836",
+      "agentId": "main",
+      "sessionKey": "agent:main:main",
+      "name": "Daily News Summary",
+      "enabled": true,
+      "createdAtMs": 1773569930923,
+      "updatedAtMs": 1773569930923,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Generate daily news summary with 5 AI news, 5 US stock market news, 5 international news, and one financial tip using Tavily search."
+      },
+      "delivery": {
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1773622800000
+      }
+    }
+  ]
 }

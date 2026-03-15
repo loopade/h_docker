@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "payload": {
+    "kind": "update",
+    "status": "error",
+    "ts": 1773569317764,
+    "sessionKey": "agent:main:main",
+    "deliveryContext": {
+      "channel": "qqbot",
+      "to": "qqbot:1BE136EE25212340B232349ED632ACCB",
+      "accountId": "default"
+    },
+    "message": null,
+    "doctorHint": "Run: openclaw doctor --non-interactive",
+    "stats": {
+      "mode": "npm",
+      "root": "/usr/local/lib/node_modules/openclaw",
+      "before": {
+        "version": "2026.3.13"
+      },
+      "after": {
+        "version": "2026.3.13"
+      },
+      "steps": [
+        {
+          "name": "global update",
+          "command": "npm i -g openclaw@latest --no-fund --no-audit --loglevel=error",
+          "cwd": "/usr/local/lib/node_modules/openclaw",
+          "durationMs": 583371,
+          "log": {
+            "stdoutTail": null,
+            "stderrTail": "npm error code 128\nnpm error An unknown git error occurred\nnpm error command git --no-replace-objects ls-remote ssh://git@github.com/whiskeysockets/libsignal-node.git\nnpm error fatal: unable to access 'https://github.com/whiskeysockets/libsignal-node.git/': Failed to connect to github.com port 443 after 134748 ms: Couldn't connect to server\nnpm error A complete log of this run can be found in: /home/node/.npm/_logs/2026-03-15T09_57_30_417Z-debug-0.log",
+            "exitCode": 128
+          }
+        },
+        {
+          "name": "global update (omit optional)",
+          "command": "npm i -g openclaw@latest --omit=optional --no-fund --no-audit --loglevel=error",
+          "cwd": "/usr/local/lib/node_modules/openclaw",
+          "durationMs": 84448,
+          "log": {
+            "stdoutTail": null,
+            "stderrTail": "npm error code EACCES\nnpm error syscall rename\nnpm error path /usr/local/lib/node_modules/openclaw\nnpm error dest /usr/local/lib/node_modules/.openclaw-aijmTbnc\nnpm error errno -13\nnpm error Error: EACCES: permission denied, rename '/usr/local/lib/node_modules/openclaw' -> '/usr/local/lib/node_modules/.openclaw-aijmTbnc'\nnpm error     at async Object.rename (node:internal/fs/promises:781:10)\nnpm error     at async moveFile (/usr/local/lib/node_modules/npm/node_modules/@npmcli/fs/lib/move-file.js:30:5)\nnpm error     at async Promise.allSettled (index 0)\nnpm error     at async #reifyPackages (/usr/local/lib/node_modules/npm/node_modules/@npmcli/arborist/lib/arborist/reify.js:315:11)\nnpm error     at async Arborist.reify (/usr/local/lib/node_modules/npm/node_modules/@npmcli/arborist/lib/arborist/reify.js:125:5)\nnpm error     at async Install.exec (/usr/local/lib/node_modules/npm/lib/commands/install.js:146:5)\nnpm error     at async Npm.exec (/usr/local/lib/node_modules/npm/lib/npm.js:193:9)\nnpm error     at async module.exports (/usr/local/lib/node_modules/npm/lib/cli/entry.js:67:5) {\nnpm error   errno: -13,\nnpm error   code: 'EACCES',\nnpm error   syscall: 'rename',\nnpm error   path: '/usr/local/lib/node_modules/openclaw',\nnpm error   dest: '/usr/local/lib/node_modules/.openclaw-aijmTbnc'\nnpm error }\nnpm error\nnpm error The operation was rejected by your operating system.\nnpm error It is likely you do not have the permissions to access this file as the current user\nnpm error\nnpm error If you believe this might be a permissions issue, please double-check the permissions of the file and its containing directories, or try running the command again as root/Administrator.\nnpm error A complete log of this run can be found in: /home/node/.npm/_logs/2026-03-15T10_07_13_817Z-debug-0.log",
+            "exitCode": 243
+          }
+        }
+      ],
+      "reason": "global update (omit optional)",
+      "durationMs": 669133
+    }
+  }
+}

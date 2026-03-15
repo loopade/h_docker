@@ -11,3 +11,6 @@ collections:
   workspace-main:
     path: /home/node/.openclaw/workspace
     pattern: "**/*.md"
+  sessions-main:
+    path: /home/node/.openclaw/agents/main/qmd/sessions
+    pattern: "**/*.md"

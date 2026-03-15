@@ -1,24 +1,21 @@
 {
   "meta": {
-    "lastTouchedVersion": "2026.3.13",
-    "lastTouchedAt": "2026-03-15T09:57:25.933Z"
+    "lastTouchedVersion": "2026.2.14",
+    "lastTouchedAt": "2026-03-15T03:51:44.155Z"
   },
   "update": {
     "checkOnStart": false
   },
   "browser": {
-    "executablePath": "/usr/bin/chromium",
     "headless": true,
     "noSandbox": true,
-    "defaultProfile": "openclaw"
+    "defaultProfile": "openclaw",
+    "executablePath": "/usr/bin/chromium"
   },
   "models": {
     "mode": "merge",
     "providers": {
       "default": {
-        "baseUrl": "https://apis.iflow.cn/v1",
-        "apiKey": "sk-c5992c87e06fa17578e10b36df920917",
-        "api": "openai-completions",
         "models": [
           {
             "id": "qwen3-coder-plus",
@@ -71,11 +68,14 @@
             "contextWindow": 131072,
             "maxTokens": 8192
           }
-        ]
+        ],
+        "apiKey": "sk-c5992c87e06fa17578e10b36df920917",
+        "baseUrl": "https://apis.iflow.cn/v1",
+        "api": "openai-completions"
       },
       "silicon": {
-        "baseUrl": "https://api.siliconflow.cn/v1",
         "apiKey": "sk-pwaovskdnflrbgfeewsyuexvuyzqqkuifjgqrsnlcyxujzvh",
+        "baseUrl": "https://api.siliconflow.cn/v1",
         "api": "openai-completions",
         "models": [
           {
@@ -135,33 +135,24 @@
   },
   "agents": {
     "defaults": {
-      "model": {
-        "primary": "default/qwen3-max"
-      },
-      "imageModel": {
-        "primary": "default/qwen3-vl-plus"
-      },
-      "workspace": "/home/node/.openclaw/workspace",
       "compaction": {
         "mode": "safeguard"
+      },
+      "sandbox": {
+        "mode": "off"
       },
       "elevatedDefault": "full",
       "maxConcurrent": 4,
       "subagents": {
         "maxConcurrent": 8
       },
-      "sandbox": {
-        "mode": "off"
-      }
-    }
-  },
-  "tools": {
-    "profile": "full",
-    "sessions": {
-      "visibility": "all"
-    },
-    "fs": {
-      "workspaceOnly": true
+      "model": {
+        "primary": "default/qwen3-coder-plus"
+      },
+      "imageModel": {
+        "primary": "default/qwen3-vl-plus"
+      },
+      "workspace": "/home/node/.openclaw/workspace"
     }
   },
   "messages": {
@@ -174,9 +165,16 @@
   },
   "commands": {
     "native": "auto",
-    "nativeSkills": "auto",
-    "restart": true,
-    "ownerDisplay": "raw"
+    "nativeSkills": "auto"
+  },
+  "tools": {
+    "profile": "full",
+    "sessions": {
+      "visibility": "all"
+    },
+    "fs": {
+      "workspaceOnly": true
+    }
   },
   "channels": {
     "feishu": {
@@ -229,57 +227,7 @@
       }
     }
   },
-  "gateway": {
-    "port": 18789,
-    "mode": "local",
-    "bind": "lan",
-    "controlUi": {
-      "allowedOrigins": [
-        "http://localhost:18789",
-        "http://h.baohuiming.net:18789",
-        "http://h-v6.baohuiming.net:18789"
-      ],
-      "allowInsecureAuth": true,
-      "dangerouslyDisableDeviceAuth": true
-    },
-    "auth": {
-      "mode": "token",
-      "token": "openclaw-20158"
-    }
-  },
-  "memory": {
-    "backend": "qmd",
-    "citations": "auto",
-    "qmd": {
-      "command": "/usr/local/bin/qmd",
-      "includeDefaultMemory": true,
-      "paths": [
-        {
-          "path": "/home/node/.openclaw/workspace",
-          "name": "workspace",
-          "pattern": "**/*.md"
-        }
-      ],
-      "sessions": {
-        "enabled": true
-      },
-      "update": {
-        "interval": "5m",
-        "debounceMs": 15000,
-        "onBoot": true
-      },
-      "limits": {
-        "maxResults": 16,
-        "timeoutMs": 8000
-      }
-    }
-  },
   "plugins": {
-    "enabled": true,
-    "allow": [
-      "feishu",
-      "qqbot"
-    ],
     "entries": {
       "feishu": {
         "enabled": true
@@ -310,6 +258,56 @@
         "installPath": "/home/node/.openclaw/extensions/qqbot",
         "installedAt": "2026-03-14T08:05:15.617Z"
       }
+    },
+    "enabled": true,
+    "allow": [
+      "feishu",
+      "qqbot"
+    ]
+  },
+  "memory": {
+    "backend": "qmd",
+    "qmd": {
+      "command": "/usr/local/bin/qmd",
+      "paths": [
+        {
+          "path": "/home/node/.openclaw/workspace",
+          "name": "workspace",
+          "pattern": "**/*.md"
+        }
+      ],
+      "includeDefaultMemory": true,
+      "sessions": {
+        "enabled": true
+      },
+      "limits": {
+        "timeoutMs": 8000,
+        "maxResults": 16
+      },
+      "update": {
+        "onBoot": true,
+        "interval": "5m",
+        "debounceMs": 15000
+      }
+    },
+    "citations": "auto"
+  },
+  "gateway": {
+    "port": 18789,
+    "bind": "lan",
+    "mode": "local",
+    "controlUi": {
+      "allowInsecureAuth": true,
+      "dangerouslyDisableDeviceAuth": true,
+      "allowedOrigins": [
+        "http://localhost:18789",
+        "http://h.baohuiming.net:18789",
+        "http://h-v6.baohuiming.net:18789"
+      ]
+    },
+    "auth": {
+      "token": "openclaw-20158",
+      "mode": "token"
     }
   }
 }
