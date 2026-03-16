@@ -1,0 +1,31 @@
+{
+  "base_url": "https://cn-cbu-gateway.ninebot.com",
+  "auth": {
+    "api_key_header": "Authorization",
+    "api_key_prefix": "Bearer "
+  },
+  "devices": {
+    "method": "GET",
+    "path": "/ai-skill/api/device/info/get-device-list",
+    "payload": {},
+    "list_path": "data",
+    "sn_field": "sn",
+    "name_field": "deviceName"
+  },
+  "device_info": {
+    "method": "POST",
+    "path": "/ai-skill/api/device/info/get-device-dynamic-info",
+    "payload": {
+      "sn": "{sn}"
+    },
+    "battery_path": "data.dumpEnergy",
+    "status_path": "data.powerStatus",
+    "location_path": "data.locationInfo.locationDesc",
+    "extra_fields": {
+      "estimateMileage": "data.estimateMileage",
+      "chargingState": "data.chargingState",
+      "remainChargeTime": "data.remainChargeTime"
+    }
+  },
+  "apiKey": "sk-m2n5p8r1t4y7u0i3o6w9z2x5c8v1b4f7k"
+}
