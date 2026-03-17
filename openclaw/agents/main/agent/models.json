@@ -20,8 +20,7 @@
             "cacheWrite": 0
           },
           "contextWindow": 131072,
-          "maxTokens": 8192,
-          "api": "openai-completions"
+          "maxTokens": 8192
         },
         {
           "id": "qwen3-max",
@@ -38,8 +37,7 @@
             "cacheWrite": 0
           },
           "contextWindow": 131072,
-          "maxTokens": 8192,
-          "api": "openai-completions"
+          "maxTokens": 8192
         },
         {
           "id": "kimi-k2",
@@ -56,8 +54,7 @@
             "cacheWrite": 0
           },
           "contextWindow": 131072,
-          "maxTokens": 8192,
-          "api": "openai-completions"
+          "maxTokens": 8192
         }
       ]
     },
@@ -81,8 +78,7 @@
             "cacheWrite": 0
           },
           "contextWindow": 200000,
-          "maxTokens": 8192,
-          "api": "openai-completions"
+          "maxTokens": 8192
         },
         {
           "id": "Pro/zai-org/GLM-5",
@@ -99,8 +95,7 @@
             "cacheWrite": 0
           },
           "contextWindow": 200000,
-          "maxTokens": 8192,
-          "api": "openai-completions"
+          "maxTokens": 8192
         },
         {
           "id": "Qwen/Qwen3-8B",
@@ -117,8 +112,7 @@
             "cacheWrite": 0
           },
           "contextWindow": 200000,
-          "maxTokens": 8192,
-          "api": "openai-completions"
+          "maxTokens": 8192
         }
       ]
     }
