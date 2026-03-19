@@ -1,7 +1,7 @@
 {
   "agent:main:main": {
-    "sessionId": "90ad713a-dda1-4984-aad0-379c15e3670b",
-    "updatedAt": 1773796378311,
+    "sessionId": "0a2eb881-3f19-41cf-9329-4f470fbaadae",
+    "updatedAt": 1773919866375,
     "systemSent": true,
     "abortedLastRun": false,
     "chatType": "direct",
@@ -19,7 +19,7 @@
       "to": "qqbot:1BE136EE25212340B232349ED632ACCB",
       "accountId": "default"
     },
-    "sessionFile": "/home/node/.openclaw/agents/main/sessions/90ad713a-dda1-4984-aad0-379c15e3670b.jsonl",
+    "sessionFile": "/home/node/.openclaw/agents/main/sessions/0a2eb881-3f19-41cf-9329-4f470fbaadae.jsonl",
     "compactionCount": 0,
     "skillsSnapshot": {
       "prompt": "\n\nThe following skills provide specialized instructions for specific tasks.\nUse the read tool to load a skill's file when the task matches its description.\nWhen a skill file references a relative path, resolve it against the skill directory (parent of SKILL.md / dirname of the path) and use that absolute path in tool commands.\n\n<available_skills>\n  <skill>\n    <name>feishu-doc</name>\n    <description>Feishu document read/write operations. Activate when user mentions Feishu docs, cloud docs, or docx links.\n</description>\n    <location>~/.openclaw/extensions/feishu/skills/feishu-doc/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-drive</name>\n    <description>Feishu cloud storage file management. Activate when user mentions cloud space, folders, drive.\n</description>\n    <location>~/.openclaw/extensions/feishu/skills/feishu-drive/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-perm</name>\n    <description>Feishu permission management for documents and files. Activate when user mentions sharing, permissions, collaborators.\n</description>\n    <location>~/.openclaw/extensions/feishu/skills/feishu-perm/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>feishu-wiki</name>\n    <description>Feishu knowledge base navigation. Activate when user mentions knowledge base, wiki, or wiki links.\n</description>\n    <location>~/.openclaw/extensions/feishu/skills/feishu-wiki/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>coding-agent</name>\n    <description>Delegate coding tasks to Codex, Claude Code, or Pi agents via background process. Use when: (1) building/creating new features or apps, (2) reviewing PRs (spawn in temp dir), (3) refactoring large codebases, (4) iterative coding that needs file exploration. NOT for: simple one-liner fixes (just edit), reading code (use read tool), thread-bound ACP harness requests in chat (for example spawn/run Codex or Claude Code in a Discord thread; use sessions_spawn with runtime:&quot;acp&quot;), or any work in ~/clawd workspace (never spawn agents here). Claude Code: use --print --permission-mode bypassPermissions (no PTY). Codex/Pi/OpenCode: pty:true required.</description>\n    <location>/usr/local/lib/node_modules/openclaw/skills/coding-agent/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>healthcheck</name>\n    <description>Host security hardening and risk-tolerance configuration for OpenClaw deployments. Use when a user asks for security audits, firewall/SSH/update hardening, risk posture, exposure review, OpenClaw cron scheduling for periodic checks, or version status checks on a machine running OpenClaw (laptop, workstation, Pi, VPS).</description>\n    <location>/usr/local/lib/node_modules/openclaw/skills/healthcheck/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>node-connect</name>\n    <description>Diagnose OpenClaw node connection and pairing failures for Android, iOS, and macOS companion apps. Use when QR/setup code/manual connect fails, local Wi-Fi works but VPS/tailnet does not, or errors mention pairing required, unauthorized, bootstrap token invalid or expired, gateway.bind, gateway.remote.url, Tailscale, or plugins.entries.device-pair.config.publicUrl.</description>\n    <location>/usr/local/lib/node_modules/openclaw/skills/node-connect/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>skill-creator</name>\n    <description>Create, edit, improve, or audit AgentSkills. Use when creating a new skill from scratch or when asked to improve, review, audit, tidy up, or clean up an existing skill or SKILL.md file. Also use when editing or restructuring a skill directory (moving files to references/ or scripts/, removing stale content, validating against the AgentSkills spec). Triggers on phrases like &quot;create a skill&quot;, &quot;author a skill&quot;, &quot;tidy up a skill&quot;, &quot;improve this skill&quot;, &quot;review the skill&quot;, &quot;clean up the skill&quot;, &quot;audit the skill&quot;.</description>\n    <location>/usr/local/lib/node_modules/openclaw/skills/skill-creator/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>video-frames</name>\n    <description>Extract frames or short clips from videos using ffmpeg.</description>\n    <location>/usr/local/lib/node_modules/openclaw/skills/video-frames/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>weather</name>\n    <description>Get current weather and forecasts via wttr.in or Open-Meteo. Use when: user asks about weather, temperature, or forecasts for any location. NOT for: historical weather data, severe weather alerts, or detailed meteorological analysis. No API key needed.</description>\n    <location>/usr/local/lib/node_modules/openclaw/skills/weather/SKILL.md</location>\n  </skill>\n  <skill>\n    <name>tavily-search</name>\n    <description>Web search via Tavily API (alternative to Brave). Use when the user asks to search the web / look up sources / find links and Brave web_search is unavailable or undesired. Returns a small set of relevant results (title, url, snippet) and can optionally include short answer summaries.</description>\n    <location>~/.openclaw/skills/SKILL.md</location>\n  </skill>\n</available_skills>",
@@ -155,8 +155,8 @@
     },
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1773796350948,
-      "sessionId": "90ad713a-dda1-4984-aad0-379c15e3670b",
+      "generatedAt": 1773919748905,
+      "sessionId": "0a2eb881-3f19-41cf-9329-4f470fbaadae",
       "sessionKey": "agent:main:main",
       "provider": "default",
       "model": "qwen3-coder-plus",
@@ -509,7 +509,7 @@
         ]
       }
     },
-    "cacheRead": 1536,
+    "cacheRead": 512,
     "cacheWrite": 0,
     "totalTokensFresh": true,
     "lastChannel": "qqbot",
@@ -518,9 +518,9 @@
     "model": "qwen3-coder-plus",
     "lastTo": "qqbot:1BE136EE25212340B232349ED632ACCB",
     "contextTokens": 131072,
-    "inputTokens": 31438,
-    "outputTokens": 201,
-    "totalTokens": 32974
+    "inputTokens": 7365,
+    "outputTokens": 8192,
+    "totalTokens": 7877
   },
   "agent:main:feishu:group:oc_d4d0c3da95a8d765426540c2af590837": {
     "sessionId": "e0c4e600-2f11-4e4e-be7a-488068fa4aa3",
@@ -1020,8 +1020,8 @@
     "totalTokens": 24131
   },
   "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836": {
-    "sessionId": "1e8052ac-ea4c-4188-b5c6-d0a2939ad0df",
-    "updatedAt": 1773795600065,
+    "sessionId": "10d51743-616b-42aa-bdf2-f8301cdc6243",
+    "updatedAt": 1773882000074,
     "systemSent": true,
     "label": "Cron: Daily News Summary",
     "skillsSnapshot": {
@@ -1160,8 +1160,8 @@
     "model": "qwen3-max",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1773795600301,
-      "sessionId": "1e8052ac-ea4c-4188-b5c6-d0a2939ad0df",
+      "generatedAt": 1773882000356,
+      "sessionId": "10d51743-616b-42aa-bdf2-f8301cdc6243",
       "sessionKey": "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836",
       "provider": "default",
       "model": "qwen3-max",
@@ -1517,16 +1517,16 @@
       }
     },
     "contextTokens": 131072,
-    "inputTokens": 73708,
-    "outputTokens": 679,
-    "totalTokens": 18715,
+    "inputTokens": 73169,
+    "outputTokens": 420,
+    "totalTokens": 18707,
     "totalTokensFresh": true,
-    "cacheRead": 320,
+    "cacheRead": 832,
     "cacheWrite": 0
   },
-  "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836:run:1e8052ac-ea4c-4188-b5c6-d0a2939ad0df": {
-    "sessionId": "1e8052ac-ea4c-4188-b5c6-d0a2939ad0df",
-    "updatedAt": 1773795600065,
+  "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836:run:10d51743-616b-42aa-bdf2-f8301cdc6243": {
+    "sessionId": "10d51743-616b-42aa-bdf2-f8301cdc6243",
+    "updatedAt": 1773882000074,
     "systemSent": true,
     "label": "Cron: Daily News Summary",
     "skillsSnapshot": {
@@ -1665,8 +1665,8 @@
     "model": "qwen3-max",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1773795600301,
-      "sessionId": "1e8052ac-ea4c-4188-b5c6-d0a2939ad0df",
+      "generatedAt": 1773882000356,
+      "sessionId": "10d51743-616b-42aa-bdf2-f8301cdc6243",
       "sessionKey": "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836",
       "provider": "default",
       "model": "qwen3-max",
@@ -2022,11 +2022,11 @@
       }
     },
     "contextTokens": 131072,
-    "inputTokens": 73708,
-    "outputTokens": 679,
-    "totalTokens": 18715,
+    "inputTokens": 73169,
+    "outputTokens": 420,
+    "totalTokens": 18707,
     "totalTokensFresh": true,
-    "cacheRead": 320,
+    "cacheRead": 832,
     "cacheWrite": 0
   }
 }
