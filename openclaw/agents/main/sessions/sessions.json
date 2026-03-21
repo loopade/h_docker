@@ -1020,8 +1020,8 @@
     "totalTokens": 24131
   },
   "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836": {
-    "sessionId": "497c7bf0-6eca-4817-9fe5-c6ee76ac53fe",
-    "updatedAt": 1773968400075,
+    "sessionId": "e9deaff9-87ea-45bb-965c-f07f9943cac7",
+    "updatedAt": 1774054800073,
     "systemSent": true,
     "label": "Cron: Daily News Summary",
     "skillsSnapshot": {
@@ -1160,8 +1160,8 @@
     "model": "qwen3-max",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1773968400366,
-      "sessionId": "497c7bf0-6eca-4817-9fe5-c6ee76ac53fe",
+      "generatedAt": 1774054800356,
+      "sessionId": "e9deaff9-87ea-45bb-965c-f07f9943cac7",
       "sessionKey": "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836",
       "provider": "default",
       "model": "qwen3-max",
@@ -1517,16 +1517,16 @@
       }
     },
     "contextTokens": 131072,
-    "inputTokens": 73169,
-    "outputTokens": 420,
-    "totalTokens": 18707,
+    "inputTokens": 73799,
+    "outputTokens": 530,
+    "totalTokens": 18910,
     "totalTokensFresh": true,
-    "cacheRead": 832,
+    "cacheRead": 448,
     "cacheWrite": 0
   },
-  "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836:run:497c7bf0-6eca-4817-9fe5-c6ee76ac53fe": {
-    "sessionId": "497c7bf0-6eca-4817-9fe5-c6ee76ac53fe",
-    "updatedAt": 1773968400075,
+  "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836:run:e9deaff9-87ea-45bb-965c-f07f9943cac7": {
+    "sessionId": "e9deaff9-87ea-45bb-965c-f07f9943cac7",
+    "updatedAt": 1774054800073,
     "systemSent": true,
     "label": "Cron: Daily News Summary",
     "skillsSnapshot": {
@@ -1665,8 +1665,8 @@
     "model": "qwen3-max",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1773968400366,
-      "sessionId": "497c7bf0-6eca-4817-9fe5-c6ee76ac53fe",
+      "generatedAt": 1774054800356,
+      "sessionId": "e9deaff9-87ea-45bb-965c-f07f9943cac7",
       "sessionKey": "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836",
       "provider": "default",
       "model": "qwen3-max",
@@ -2022,11 +2022,11 @@
       }
     },
     "contextTokens": 131072,
-    "inputTokens": 73169,
-    "outputTokens": 420,
-    "totalTokens": 18707,
+    "inputTokens": 73799,
+    "outputTokens": 530,
+    "totalTokens": 18910,
     "totalTokensFresh": true,
-    "cacheRead": 832,
+    "cacheRead": 448,
     "cacheWrite": 0
   }
 }
