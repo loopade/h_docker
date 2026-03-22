@@ -257,3 +257,17 @@
           - counter.zao_fang_ci_wo
           - counter.chi_fan
   mode: single
+- id: '1774167206396'
+  alias: 电动车充电
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - binary_sensor.28dbd2532j3053_charging
+  conditions: []
+  actions:
+  - action: notify.mobile_app_universal
+    metadata: {}
+    data:
+      message: 电动车充电状态变化。
+  mode: single
