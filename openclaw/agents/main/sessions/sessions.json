@@ -1020,8 +1020,8 @@
     "totalTokens": 24131
   },
   "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836": {
-    "sessionId": "2673158d-75dd-4ed9-bb05-25d6be1d356c",
-    "updatedAt": 1775696400070,
+    "sessionId": "1e517c22-ab7d-4849-b537-2df1f503938f",
+    "updatedAt": 1775782800075,
     "systemSent": true,
     "label": "Cron: Daily News Summary",
     "skillsSnapshot": {
@@ -1160,8 +1160,8 @@
     "model": "qwen3-max",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1775696400354,
-      "sessionId": "2673158d-75dd-4ed9-bb05-25d6be1d356c",
+      "generatedAt": 1775782800351,
+      "sessionId": "1e517c22-ab7d-4849-b537-2df1f503938f",
       "sessionKey": "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836",
       "provider": "default",
       "model": "qwen3-max",
@@ -1524,9 +1524,9 @@
     "cacheRead": 448,
     "cacheWrite": 0
   },
-  "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836:run:2673158d-75dd-4ed9-bb05-25d6be1d356c": {
-    "sessionId": "2673158d-75dd-4ed9-bb05-25d6be1d356c",
-    "updatedAt": 1775696400070,
+  "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836:run:1e517c22-ab7d-4849-b537-2df1f503938f": {
+    "sessionId": "1e517c22-ab7d-4849-b537-2df1f503938f",
+    "updatedAt": 1775782800075,
     "systemSent": true,
     "label": "Cron: Daily News Summary",
     "skillsSnapshot": {
@@ -1665,8 +1665,8 @@
     "model": "qwen3-max",
     "systemPromptReport": {
       "source": "run",
-      "generatedAt": 1775696400354,
-      "sessionId": "2673158d-75dd-4ed9-bb05-25d6be1d356c",
+      "generatedAt": 1775782800351,
+      "sessionId": "1e517c22-ab7d-4849-b537-2df1f503938f",
       "sessionKey": "agent:main:cron:af859a5d-d696-4cdb-9977-c5b1f914e836",
       "provider": "default",
       "model": "qwen3-max",

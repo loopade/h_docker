@@ -8,7 +8,7 @@
       "name": "Daily News Summary",
       "enabled": true,
       "createdAtMs": 1773569930923,
-      "updatedAtMs": 1775610003205,
+      "updatedAtMs": 1775696403293,
       "schedule": {
         "kind": "cron",
         "expr": "0 9 * * *",
@@ -24,15 +24,15 @@
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1775696400000,
-        "lastRunAtMs": 1775610000054,
+        "nextRunAtMs": 1775782800000,
+        "lastRunAtMs": 1775696400052,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 3151,
+        "lastDurationMs": 3241,
         "lastDelivered": false,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0,
-        "runningAtMs": 1775696400005
+        "runningAtMs": 1775782800005
       }
     }
   ]
