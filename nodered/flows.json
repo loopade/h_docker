@@ -11,10 +11,17 @@
         "id": "399a2a4a03353dc7",
         "type": "server",
         "name": "Home Assistant",
-        "version": 5,
+        "version": 6,
         "addon": false,
         "rejectUnauthorizedCerts": true,
-        "ha_boolean": "y|yes|true|on|home|open",
+        "ha_boolean": [
+            "y",
+            "yes",
+            "true",
+            "on",
+            "home",
+            "open"
+        ],
         "connectionDelay": true,
         "cacheJson": true,
         "heartbeat": false,
@@ -261,7 +268,8 @@
         "y": 200,
         "wires": [
             [
-                "caeb88dfbe8fb33c"
+                "caeb88dfbe8fb33c",
+                "0409dea753249ed5"
             ]
         ]
     },
@@ -274,7 +282,8 @@
         "y": 200,
         "wires": [
             [
-                "41fb891fb0c01265"
+                "41fb891fb0c01265",
+                "0409dea753249ed5"
             ]
         ]
     },
@@ -298,7 +307,7 @@
                 "keyType": "other",
                 "keyValue": "Authorization",
                 "valueType": "other",
-                "valueValue": "Bearer sk-ihweasuuaopszqsqszufrbrdhwolicznzcpdpqgxinttwkiw"
+                "valueValue": "Bearer sk-fxujjtrybnwspimwipvayikmywibkcxajzcgbzwtslvxjxjo"
             },
             {
                 "keyType": "Content-Type",
@@ -311,7 +320,8 @@
         "y": 280,
         "wires": [
             [
-                "8a0dce65a4ebedb4"
+                "8a0dce65a4ebedb4",
+                "0409dea753249ed5"
             ]
         ]
     },
@@ -320,7 +330,7 @@
         "type": "function",
         "z": "d6ac0adf6a8f5b74",
         "name": "消息设置",
-        "func": "const message = {\n  role: \"user\",\n  content: `你是一个中文智能家庭音箱，请播报未来12小时的温度和天气情况，*回答必须在一句话以内，语气略微欢快但别轻佻*：\n        \"\"\"\n        ${JSON.stringify(msg.payload)}\n        \"\"\"\n        `\n}\n\nconst data = {\n  model: \"Qwen/Qwen2.5-7B-Instruct\",\n  messages: [message]\n}\n\nmsg.payload = data\n\nreturn msg",
+        "func": "const message = {\n  role: \"user\",\n  content: `你是一个中文智能家庭音箱，请播报未来12小时的温度和天气情况，*回答必须在一句话以内，语气略微欢快但别轻佻*：\n        \"\"\"\n        ${JSON.stringify(msg.payload)}\n        \"\"\"\n        `\n}\n\nconst data = {\n  model: \"Qwen/Qwen3.5-4B\",\n  messages: [message]\n}\n\nmsg.payload = data\n\nreturn msg",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -352,7 +362,8 @@
         "y": 280,
         "wires": [
             [
-                "f4e7c969bf4a1f3a"
+                "f4e7c969bf4a1f3a",
+                "0409dea753249ed5"
             ]
         ]
     },
@@ -377,7 +388,8 @@
         "y": 280,
         "wires": [
             [
-                "7b52593ea18f1dc2"
+                "7b52593ea18f1dc2",
+                "0409dea753249ed5"
             ]
         ]
     },
@@ -531,5 +543,21 @@
                 "b0d36d53709c3e48"
             ]
         ]
+    },
+    {
+        "id": "0409dea753249ed5",
+        "type": "debug",
+        "z": "d6ac0adf6a8f5b74",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 120,
+        "wires": []
     }
 ]
