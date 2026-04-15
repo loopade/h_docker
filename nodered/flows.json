@@ -307,7 +307,7 @@
                 "keyType": "other",
                 "keyValue": "Authorization",
                 "valueType": "other",
-                "valueValue": "Bearer sk-fxujjtrybnwspimwipvayikmywibkcxajzcgbzwtslvxjxjo"
+                "valueValue": "Bearer sk-ihweasuuaopszqsqszufrbrdhwolicznzcpdpqgxinttwkiw"
             },
             {
                 "keyType": "Content-Type",
@@ -549,7 +549,7 @@
         "type": "debug",
         "z": "d6ac0adf6a8f5b74",
         "name": "debug 1",
-        "active": false,
+        "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
