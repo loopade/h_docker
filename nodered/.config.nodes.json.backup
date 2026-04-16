@@ -484,5 +484,24 @@
                 "file": "/data/node_modules/node-red-contrib-home-assistant-websocket/dist/index.js"
             }
         }
+    },
+    "node-red-contrib-gzip": {
+        "name": "node-red-contrib-gzip",
+        "version": "0.0.3",
+        "local": true,
+        "user": true,
+        "nodes": {
+            "markdown": {
+                "name": "markdown",
+                "types": [
+                    "gzip"
+                ],
+                "enabled": true,
+                "local": true,
+                "user": false,
+                "module": "node-red-contrib-gzip",
+                "file": "/data/node_modules/node-red-contrib-gzip/lib/gzip.js"
+            }
+        }
     }
 }

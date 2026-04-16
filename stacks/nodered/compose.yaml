@@ -2,7 +2,7 @@ name: nodered
 services:
   node-red:
     container_name: nodered
-    image: docker.io/nodered/node-red:4.1.7
+    image: docker.io/nodered/node-red:4.1.8
     volumes:
       - /home/docker/nodered:/data
     restart: always
