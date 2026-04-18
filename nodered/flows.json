@@ -198,7 +198,8 @@
         "y": 200,
         "wires": [
             [
-                "07cbb570d8f9166c"
+                "07cbb570d8f9166c",
+                "0409dea753249ed5"
             ]
         ]
     },
@@ -307,7 +308,7 @@
                 "keyType": "other",
                 "keyValue": "Authorization",
                 "valueType": "other",
-                "valueValue": "Bearer sk-ihweasuuaopszqsqszufrbrdhwolicznzcpdpqgxinttwkiw"
+                "valueValue": "Bearer sk-mscqhlryljysradhmpxudfqljfpggveqlwjtlklvhgscjgua"
             },
             {
                 "keyType": "Content-Type",
@@ -330,7 +331,7 @@
         "type": "function",
         "z": "d6ac0adf6a8f5b74",
         "name": "消息设置",
-        "func": "const message = {\n  role: \"user\",\n  content: `你是一个中文智能家庭音箱，请播报未来12小时的温度和天气情况，*回答必须在一句话以内，语气略微欢快但别轻佻*：\n        \"\"\"\n        ${JSON.stringify(msg.payload)}\n        \"\"\"\n        `\n}\n\nconst data = {\n  model: \"Qwen/Qwen3.5-4B\",\n  messages: [message]\n}\n\nmsg.payload = data\n\nreturn msg",
+        "func": "const message = {\n  role: \"user\",\n  content: `你是一个中文智能家庭音箱，请播报未来12小时的温度和天气情况，*回答必须在一句话以内，语气略微欢快但别轻佻*：\n        \"\"\"\n        ${JSON.stringify(msg.payload)}\n        \"\"\"\n        `\n}\n\nconst data = {\n  model: \"Qwen/Qwen3.5-4B\",\n  messages: [message],\n  enable_thinking: false\n}\n\nmsg.payload = data\n\nreturn msg",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
