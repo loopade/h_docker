@@ -271,3 +271,20 @@
     data:
       message: 电动车充电状态变化。
   mode: single
+- id: '1780929069757'
+  alias: 刮胡子提醒
+  description: ''
+  triggers:
+  - trigger: time
+    at: 09:15:00
+  conditions: []
+  actions:
+  - action: tts.speak
+    metadata: {}
+    data:
+      cache: true
+      message: 该刮胡子了~
+      media_player_entity_id: media_player.feixun
+    target:
+      entity_id: tts.edge_tts
+  mode: single
