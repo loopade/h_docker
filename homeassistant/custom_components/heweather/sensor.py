@@ -32,7 +32,7 @@ from homeassistant.const import (
     #LENGTH_KILOMETERS
     UnitOfLength
 )
-from homeassistant.helpers.entity import Entity
+from homeassistant.helpers.entity import Entity, DeviceInfo
 import homeassistant.helpers.config_validation as cv
 import homeassistant.util.dt as dt_util
 
@@ -64,12 +64,12 @@ LIFESUGGESTION_TIME_BETWEEN_UPDATES = timedelta(seconds=7200)
 OPTIONS = {
     "temprature": ["heweather_temperature", "室外温度", "mdi:thermometer", UnitOfTemperature.CELSIUS],
     "humidity": ["heweather_humidity", "室外湿度", "mdi:water-percent", PERCENTAGE],
-    "feelsLike": ["heweather_feelsLike", "体感温度", "mdi:thermometer", UnitOfTemperature.CELSIUS],
+    "feelsLike": ["heweather_feelslike", "体感温度", "mdi:thermometer", UnitOfTemperature.CELSIUS],
     "text": ["heweather_text", "天气描述", "mdi:thermometer", ' '],
     "precip": ["heweather_precip", "小时降水量", "mdi:weather-rainy", UnitOfVolumetricFlux.MILLIMETERS_PER_HOUR],
-    "windDir": ["heweather_windDir", "风向", "mdi:windsock", ' '],
-    "windScale": ["heweather_windScale", "风力等级", "mdi:weather-windy", ' '],
-    "windSpeed": ["heweather_windSpeed", "风速", "mdi:weather-windy", UnitOfSpeed.KILOMETERS_PER_HOUR],
+    "windDir": ["heweather_winddir", "风向", "mdi:windsock", ' '],
+    "windScale": ["heweather_windscale", "风力等级", "mdi:weather-windy", ' '],
+    "windSpeed": ["heweather_windspeed", "风速", "mdi:weather-windy", UnitOfSpeed.KILOMETERS_PER_HOUR],
     "dew": ["heweather_dew", "露点温度", "mdi:thermometer-water", ' '],
     "pressure": ["heweather_pressure", "大气压强", "mdi:thermometer", UnitOfPressure.HPA],
     "vis": ["heweather_vis", "能见度", "mdi:thermometer", UnitOfLength.KILOMETERS],
@@ -190,7 +190,11 @@ class HeweatherWeatherSensor(Entity):
         self._weather_data = weather_data
         self._suggestion_data = suggestion_data
         self._object_id = OPTIONS[option][0]
-        #self._name = OPTIONS[option][0] #原来是1中文,变成0英文增加翻译
+        
+        # 【修改重点】直接使用 OPTIONS 里的中文名称作为实体名
+        # OPTIONS[option][1] 对应代码最上面的字典里的 "舒适度指数"、"洗车指数" 等中文
+        self._attr_name = OPTIONS[option][0] 
+        
         self._icon = OPTIONS[option][2]
         self._unit_of_measurement = OPTIONS[option][3]
 
@@ -199,6 +203,17 @@ class HeweatherWeatherSensor(Entity):
         self._attributes = {"states":"null"}
         self._updatetime = None
         self._attr_unique_id = f"{OPTIONS[option][0]}_{longitude}_{latitude}"
+
+    @property
+    def device_info(self) -> DeviceInfo:
+        """Return the device info."""
+        return DeviceInfo(
+            identifiers={(DOMAIN, f"{self._weather_data._params['location']}")},
+            name="和风天气",
+            manufacturer="QWeather",
+            model="API v7",
+            entry_type=None,
+        )
 
     @property
     def extra_state_attributes(self):
